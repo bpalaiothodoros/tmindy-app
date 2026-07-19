@@ -16,6 +16,10 @@ const T = {
   brand: "#D8B24C",
   brandSoft: "#3A2F12",
   brandGlow: "#F3DB94",
+  brandDeep: "#B8912F",
+  brandLine: "#5A4718",
+  cardTop: "#181511",
+  cardBot: "#131210",
   gain: "#26D0A3",
   gainSoft: "#0B3A2E",
   loss: "#FF5C5C",
@@ -43,6 +47,17 @@ const STR = {
       discipline: "Πειθαρχία", psychology: "Ψυχολογία", execution: "Εκτέλεση", risk: "Ρίσκο",
       recent: "Πρόσφατα Trades", violations: "Παραβιάσεις (7 ημέρες)",
       openPositions: "Ανοιχτές θέσεις", bySession: "Ανά Session", byAsset: "Ανά Asset",
+      overall: "Discipline Score", periodTitle: "Περίοδος",
+      pToday: "Σήμερα", p7: "7 ημ.", p15: "15 ημ.", p30: "30 ημ.", pAll: "Όλα", pCustom: "Προσαρμογή",
+      from: "Από", to: "Έως",
+      netPnl: "Καθαρό P&L", profitFactor: "Profit Factor", avgWin: "Μέσο κέρδος", avgLoss: "Μέση ζημιά",
+      revenge: "Revenge trades", violationsN: "Παραβιάσεις",
+      wentRight: "Τι πήγε ΣΩΣΤΑ", wentWrong: "Τι πήγε ΛΑΘΟΣ",
+      bestAsset: "Καλύτερο asset", worstAsset: "Χειρότερο asset",
+      bestSession: "Καλύτερο session", worstSession: "Χειρότερο session",
+      noPeriodTrades: "Δεν υπάρχουν trades σε αυτή την περίοδο.",
+      prepTitle: "Προετοιμασία πριν το trading", prepStart: "Pre-Market Check",
+      prepAsk: "AI Briefing", prepThinking: "Ετοιμάζω briefing...",
     },
     form: {
       title: "Καταγραφή νέου trade", asset: "Asset", direction: "Κατεύθυνση", long: "Long", short: "Short",
@@ -136,6 +151,17 @@ const STR = {
       discipline: "Discipline", psychology: "Psychology", execution: "Execution", risk: "Risk",
       recent: "Recent Trades", violations: "Violations (7 days)",
       openPositions: "Open Positions", bySession: "By Session", byAsset: "By Asset",
+      overall: "Discipline Score", periodTitle: "Period",
+      pToday: "Today", p7: "7d", p15: "15d", p30: "30d", pAll: "All", pCustom: "Custom",
+      from: "From", to: "To",
+      netPnl: "Net P&L", profitFactor: "Profit Factor", avgWin: "Avg win", avgLoss: "Avg loss",
+      revenge: "Revenge trades", violationsN: "Violations",
+      wentRight: "What went RIGHT", wentWrong: "What went WRONG",
+      bestAsset: "Best asset", worstAsset: "Worst asset",
+      bestSession: "Best session", worstSession: "Worst session",
+      noPeriodTrades: "No trades in this period.",
+      prepTitle: "Prepare before trading", prepStart: "Pre-Market Check",
+      prepAsk: "AI Briefing", prepThinking: "Preparing briefing...",
     },
     form: {
       title: "Log a new trade", asset: "Asset", direction: "Direction", long: "Long", short: "Short",
@@ -250,6 +276,64 @@ const FEELINGS = {
   en: ["Calm", "Anxious", "Excited", "Fearful", "Confident", "Uncertain", "Tired"],
 };
 const FEELING_CALM_KEYS = ["Ήρεμος", "Σίγουρος", "Calm", "Confident"];
+
+/* ------------------------------------------------------------
+   STATS ENGINE — υπολογίζει βαθιά στατιστικά για ΟΠΟΙΟΔΗΠΟΤΕ
+   υποσύνολο trades (π.χ. φιλτραρισμένο ανά περίοδο). Επιστρέφει
+   και ανάλυση "τι πήγε σωστά / τι λάθος".
+   ------------------------------------------------------------ */
+function buildStats(trades, maxRiskVal = 1) {
+  const closed = trades.filter((t) => t.status !== "open");
+  const openCount = trades.length - closed.length;
+  const totalPnl = closed.reduce((s, t) => s + (parseFloat(t.pnl) || 0), 0);
+  const wins = closed.filter((t) => (parseFloat(t.pnl) || 0) > 0);
+  const losses = closed.filter((t) => (parseFloat(t.pnl) || 0) < 0);
+  const winRate = closed.length ? Math.round((wins.length / closed.length) * 100) : 0;
+  const avgWin = wins.length ? wins.reduce((a, t) => a + parseFloat(t.pnl), 0) / wins.length : 0;
+  const grossLoss = Math.abs(losses.reduce((a, t) => a + parseFloat(t.pnl), 0));
+  const grossWin = wins.reduce((a, t) => a + parseFloat(t.pnl), 0);
+  const avgLoss = losses.length ? grossLoss / losses.length : 0;
+  const expectancy = closed.length ? ((wins.length / closed.length) * avgWin - (losses.length / closed.length) * avgLoss) : 0;
+  const profitFactor = grossLoss > 0 ? grossWin / grossLoss : (grossWin > 0 ? Infinity : 0);
+  const violationsCount = trades.reduce((a, t) => a + (t.ruleViolations?.length || 0), 0);
+  const revengeCount = trades.filter((t) => t.revengeFlag).length;
+  const planFollowedPct = trades.length ? Math.round((trades.filter((t) => t.followedPlan).length / trades.length) * 100) : 0;
+  const noViolationPct = trades.length ? Math.round((trades.filter((t) => !t.ruleViolations?.length).length / trades.length) * 100) : 100;
+  const calmPct = trades.length ? Math.round((trades.filter((t) => FEELING_CALM_KEYS.includes(t.feelingBefore)).length / trades.length) * 100) : 0;
+  const riskOkPct = trades.length ? Math.round((trades.filter((t) => (parseFloat(t.riskPercent) || 0) <= maxRiskVal).length / trades.length) * 100) : 100;
+
+  const group = (keyFn) => {
+    const m = {};
+    for (const t of closed) {
+      const key = keyFn(t) || "?";
+      if (!m[key]) m[key] = { count: 0, pnl: 0, wins: 0 };
+      m[key].count++; m[key].pnl += parseFloat(t.pnl) || 0;
+      if ((parseFloat(t.pnl) || 0) > 0) m[key].wins++;
+    }
+    return Object.entries(m)
+      .map(([k, v]) => ({ key: k, count: v.count, pnl: v.pnl, winRate: Math.round((v.wins / v.count) * 100) }))
+      .sort((a, b) => b.count - a.count);
+  };
+  const sessionStats = group((t) => t.session).map((x) => ({ session: x.key, ...x }));
+  const assetStats = group((t) => t.asset).map((x) => ({ asset: x.key, ...x }));
+
+  const byPnl = (arr) => [...arr].sort((a, b) => b.pnl - a.pnl);
+  const bestAsset = assetStats.length ? byPnl(assetStats)[0] : null;
+  const worstAsset = assetStats.length ? byPnl(assetStats)[assetStats.length - 1] : null;
+  const bestSession = sessionStats.length ? byPnl(sessionStats)[0] : null;
+  const worstSession = sessionStats.length ? byPnl(sessionStats)[sessionStats.length - 1] : null;
+
+  const discipline = planFollowedPct, psychology = calmPct, execution = noViolationPct, risk = riskOkPct;
+  const overall = Math.round((discipline + psychology + execution + risk) / 4);
+
+  return {
+    totalPnl, winRate, count: closed.length, openCount, expectancy, profitFactor,
+    avgWin, avgLoss, grossWin, grossLoss, violationsCount, revengeCount,
+    discipline, psychology, execution, risk, overall,
+    sessionStats: sessionStats.slice(0, 6), assetStats: assetStats.slice(0, 6),
+    bestAsset, worstAsset, bestSession, worstSession,
+  };
+}
 
 // Συμπυκνωμένη βάση γνώσης πάνω στην οποία βασίζεται το AI coaching — process over outcome,
 // γνωστικές παγίδες, revenge trading, πειθαρχία. Ενσωματώνεται σε κάθε prompt ώστε η ανάλυση
@@ -368,49 +452,135 @@ async function callClaude(promptText, jsonOnly = true, maxTokens = 1000) {
 function GlobalStyle() {
   return (
     <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=Roboto:wght@500;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
-      * { box-sizing: border-box; }
-      .vtx { font-family: ${FONT_BODY}; background: ${T.bg}; color: ${T.text}; min-height: 100vh; }
+      @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=Roboto:wght@500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+      * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+      .vtx { font-family: ${FONT_BODY}; background:
+             radial-gradient(1200px 600px at 50% -10%, #17130a 0%, ${T.bg} 60%) fixed;
+             color: ${T.text}; min-height: 100vh; }
       .vtx-mono { font-family: ${FONT_MONO}; }
       .vtx-display { font-family: ${FONT_DISPLAY}; }
-      .vtx-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 28px; border-bottom: 1px solid ${T.borderSoft}; background: linear-gradient(180deg, ${T.bgSoft}, ${T.bg}); }
-      .vtx-brand { display: flex; align-items: center; gap: 12px; }
-      .vtx-logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, ${T.brand}, ${T.brandGlow}); display:flex;align-items:center;justify-content:center; font-family:${FONT_DISPLAY}; font-weight:800; font-size:16px; box-shadow: 0 4px 20px ${T.brand}55; }
-      .vtx-nav { display: flex; gap: 4px; padding: 12px 24px; background: ${T.bgSoft}; overflow-x: auto; border-bottom: 1px solid ${T.borderSoft}; }
-      .vtx-navbtn { padding: 9px 16px; border-radius: 10px; border: 1px solid transparent; background: transparent; color: ${T.textMuted}; font-family:${FONT_BODY}; font-weight:600; font-size:14px; cursor:pointer; white-space:nowrap; transition: all .15s; }
-      .vtx-navbtn:hover { color: ${T.text}; background: ${T.surface}; }
-      .vtx-navbtn.active { color: ${T.text}; background: ${T.brandSoft}; border-color: ${T.brand}66; }
-      .vtx-main { padding: 28px; max-width: 1100px; margin: 0 auto; }
-      .vtx-card { background: ${T.surface}; border: 1px solid ${T.borderSoft}; border-radius: 16px; padding: 22px; }
-      .vtx-grid { display: grid; gap: 16px; }
+
+      /* HEADER / BRAND */
+      .vtx-header { display:flex; align-items:center; justify-content:space-between;
+        padding: 18px 22px 16px; background: linear-gradient(180deg, #14110a, ${T.bg});
+        border-bottom: 1px solid transparent;
+        box-shadow: 0 1px 0 ${T.brandLine}, 0 10px 30px -12px #000; }
+      .vtx-brand { display:flex; align-items:center; gap: 14px; }
+      .vtx-logo-img { height: 58px; width:auto; filter: drop-shadow(0 4px 18px ${T.brand}44); }
+      .vtx-wordmark { font-family:${FONT_DISPLAY}; font-weight:800; font-size:26px; line-height:1;
+        color:${T.brand}; letter-spacing:.5px; -webkit-text-stroke:.5px rgba(255,255,255,.16);
+        text-shadow: 0 0 20px ${T.brand}44; }
+      .vtx-tagline { font-family:'Roboto',sans-serif; font-weight:700; font-size:8.5px;
+        letter-spacing:.34em; color:${T.brandDeep}; margin-top:5px; }
+
+      /* NAV */
+      .vtx-nav { display:flex; gap:8px; padding: 12px 16px; overflow-x:auto;
+        background: #100d08; border-bottom:1px solid ${T.brandLine}; scrollbar-width:none; }
+      .vtx-nav::-webkit-scrollbar { display:none; }
+      .vtx-navbtn { padding: 9px 16px; border-radius: 999px; border:1px solid ${T.borderSoft};
+        background: ${T.surfaceHi}; color:${T.textMuted}; font-family:${FONT_DISPLAY}; font-weight:700;
+        font-size:13px; cursor:pointer; white-space:nowrap; transition:all .15s; }
+      .vtx-navbtn:hover { color:${T.brandGlow}; border-color:${T.brandLine}; }
+      .vtx-navbtn.active { color:#1a1405;
+        background: linear-gradient(135deg, ${T.brandGlow}, ${T.brand});
+        border-color:${T.brandGlow}; box-shadow:0 4px 16px ${T.brand}44; }
+
+      .vtx-main { padding: 22px 18px 48px; max-width: 1080px; margin: 0 auto; }
+
+      /* CARDS */
+      .vtx-card { background: linear-gradient(180deg, ${T.cardTop}, ${T.cardBot});
+        border:1px solid ${T.brandLine}; border-radius: 18px; padding: 20px;
+        box-shadow: 0 12px 34px -18px #000, inset 0 1px 0 rgba(243,219,148,.06); }
+      .vtx-grid { display:grid; gap:14px; }
       .vtx-grid-4 { grid-template-columns: repeat(4, 1fr); }
       .vtx-grid-2 { grid-template-columns: repeat(2, 1fr); }
-      @media (max-width: 760px) { .vtx-grid-4, .vtx-grid-2 { grid-template-columns: 1fr; } .vtx-main { padding: 16px; } }
-      .vtx-stat-label { font-size: 12px; color: ${T.textMuted}; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
-      .vtx-stat-value { font-family: ${FONT_MONO}; font-size: 26px; font-weight: 700; }
-      .vtx-input, .vtx-select, .vtx-textarea { width: 100%; background: ${T.surfaceHi}; border: 1px solid ${T.border}; color: ${T.text}; border-radius: 10px; padding: 10px 12px; font-family: ${FONT_BODY}; font-size: 14px; outline: none; transition: border-color .15s; }
-      .vtx-input:focus, .vtx-select:focus, .vtx-textarea:focus { border-color: ${T.brandGlow}; box-shadow: 0 0 0 3px ${T.brandGlow}22; }
-      .vtx-label { font-size: 13px; font-weight: 700; color: ${T.brand}; margin-bottom: 6px; display:block; }
-      .vtx-field { margin-bottom: 14px; }
-      .vtx-btn { background: linear-gradient(135deg, ${T.brand}, ${T.brandGlow}); color: white; border: none; border-radius: 12px; padding: 12px 22px; font-weight: 700; font-family: ${FONT_DISPLAY}; font-size: 14px; cursor: pointer; transition: transform .1s, box-shadow .15s; box-shadow: 0 4px 16px ${T.brand}40; }
-      .vtx-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 22px ${T.brand}66; }
-      .vtx-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-      .vtx-btn-ghost { background: ${T.surfaceHi}; color: ${T.text}; border: 1px solid ${T.border}; border-radius: 12px; padding: 10px 18px; font-weight: 600; font-size: 13px; cursor: pointer; }
-      .vtx-btn-danger { background: ${T.lossSoft}; color: ${T.loss}; border: 1px solid ${T.loss}55; border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer; }
-      .vtx-checkbox-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
-      .vtx-tag { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-      .vtx-tag-warn { background: ${T.warnSoft}; color: ${T.warn}; }
-      .vtx-tag-danger { background: ${T.lossSoft}; color: ${T.loss}; }
-      .vtx-tag-gain { background: ${T.gainSoft}; color: ${T.gain}; }
-      .vtx-gate { border-radius: 14px; padding: 16px; margin-top: 8px; border: 1px solid; transition: all .2s; }
-      .vtx-gate-ok { background: ${T.gainSoft}; border-color: ${T.gain}55; }
-      .vtx-gate-warn { background: ${T.warnSoft}; border-color: ${T.warn}66; }
-      .vtx-lang-toggle { display: flex; background: ${T.surfaceHi}; border-radius: 10px; padding: 3px; border: 1px solid ${T.border}; }
-      .vtx-lang-btn { border: none; background: transparent; color: ${T.textMuted}; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; }
-      .vtx-lang-btn.active { background: ${T.brand}; color: white; }
-      .vtx-trade-row { border: 1px solid ${T.borderSoft}; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; background: ${T.surfaceHi}; }
-      .vtx-divider { height: 1px; background: ${T.borderSoft}; margin: 18px 0; }
-      .vtx-section-title { font-family: ${FONT_DISPLAY}; font-weight: 700; font-size: 15px; margin-bottom: 12px; color: ${T.textMuted}; text-transform: uppercase; letter-spacing: .05em; }
+      @media (max-width: 760px) { .vtx-grid-4 { grid-template-columns: 1fr 1fr; } .vtx-grid-2 { grid-template-columns: 1fr; } }
+
+      /* SECTION TITLE — χρυσό bold με λεπτό άσπρο περίγραμμα */
+      .vtx-section-title { font-family:${FONT_DISPLAY}; font-weight:800; font-size:15px;
+        margin: 4px 0 14px; color:${T.brand}; text-transform:uppercase; letter-spacing:.14em;
+        -webkit-text-stroke:.4px rgba(255,255,255,.18); text-shadow:0 0 16px ${T.brand}33;
+        display:flex; align-items:center; gap:10px; }
+      .vtx-section-title::before { content:""; width:4px; height:16px; border-radius:2px;
+        background: linear-gradient(180deg, ${T.brandGlow}, ${T.brand}); box-shadow:0 0 10px ${T.brand}88; }
+      .vtx-cardhead { font-family:${FONT_DISPLAY}; font-weight:800; font-size:13px;
+        text-transform:uppercase; letter-spacing:.12em; color:${T.brand};
+        -webkit-text-stroke:.3px rgba(255,255,255,.14); }
+
+      /* KPI TILES */
+      .vtx-kpi { background: linear-gradient(180deg, ${T.cardTop}, ${T.cardBot});
+        border:1px solid ${T.brandLine}; border-radius:16px; padding:16px 18px;
+        box-shadow: inset 0 1px 0 rgba(243,219,148,.05); }
+      .vtx-kpi-label { font-size:10.5px; color:${T.brandDeep}; font-weight:800; text-transform:uppercase;
+        letter-spacing:.12em; margin-bottom:8px; }
+      .vtx-kpi-value { font-family:${FONT_MONO}; font-size:24px; font-weight:700; line-height:1; }
+      .vtx-stat-label { font-size:12px; color:${T.textMuted}; font-weight:600; text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px; }
+      .vtx-stat-value { font-family:${FONT_MONO}; font-size:24px; font-weight:700; }
+
+      /* GOLD BARS (sub-metrics) */
+      .vtx-bar { display:flex; align-items:center; gap:12px; margin:11px 0; }
+      .vtx-bar-lbl { font-size:12.5px; font-weight:700; color:${T.text}; width:96px; flex:none; }
+      .vtx-bar-track { flex:1; height:9px; border-radius:999px; background:#241d0e; overflow:hidden;
+        border:1px solid ${T.brandLine}; }
+      .vtx-bar-fill { height:100%; border-radius:999px;
+        background: linear-gradient(90deg, ${T.brandDeep}, ${T.brandGlow}); box-shadow:0 0 12px ${T.brand}66; }
+      .vtx-bar-val { font-family:${FONT_MONO}; font-size:12.5px; font-weight:700; color:${T.brandGlow}; width:38px; text-align:right; flex:none; }
+
+      /* PERIOD CHIPS */
+      .vtx-chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+      .vtx-chip { padding:7px 14px; border-radius:999px; border:1px solid ${T.brandLine};
+        background:${T.surfaceHi}; color:${T.textMuted}; font-weight:700; font-size:12.5px; cursor:pointer; }
+      .vtx-chip.active { color:#1a1405; background:linear-gradient(135deg,${T.brandGlow},${T.brand});
+        border-color:${T.brandGlow}; }
+
+      /* WIN/LOSS ANALYSIS */
+      .vtx-wl { border-radius:14px; padding:14px 16px; border:1px solid; }
+      .vtx-wl.good { background: linear-gradient(180deg, #0d2c22, #0a1f19); border-color:${T.gain}44; }
+      .vtx-wl.bad { background: linear-gradient(180deg, #2c1414, #1f0e0e); border-color:${T.loss}44; }
+      .vtx-wl-h { font-weight:800; font-size:12.5px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+      .vtx-wl-item { display:flex; justify-content:space-between; gap:8px; font-size:13px; padding:5px 0; border-top:1px solid rgba(255,255,255,.05); }
+      .vtx-wl-item:first-of-type { border-top:none; }
+
+      /* PREP HERO */
+      .vtx-prep { background: linear-gradient(135deg, #211a0c 0%, #14110a 60%);
+        border:1px solid ${T.brand}66; border-radius:20px; padding:20px;
+        box-shadow: 0 16px 40px -18px ${T.brand}55, inset 0 1px 0 rgba(243,219,148,.1); margin-bottom:18px; }
+      .vtx-prep-k { font-family:${FONT_DISPLAY}; font-weight:800; font-size:17px; color:${T.brandGlow};
+        -webkit-text-stroke:.4px rgba(255,255,255,.16); letter-spacing:.02em; }
+      .vtx-prep-line { display:flex; align-items:flex-start; gap:9px; font-size:13.5px; margin-top:9px; color:${T.text}; }
+      .vtx-prep-dot { color:${T.brand}; font-weight:900; }
+
+      /* INPUTS */
+      .vtx-input, .vtx-select, .vtx-textarea { width:100%; background:#100d08; border:1px solid ${T.brandLine};
+        color:${T.text}; border-radius:11px; padding:11px 13px; font-family:${FONT_BODY}; font-size:14px; outline:none; transition:border-color .15s; }
+      .vtx-input:focus, .vtx-select:focus, .vtx-textarea:focus { border-color:${T.brandGlow}; box-shadow:0 0 0 3px ${T.brandGlow}22; }
+      .vtx-label { font-size:12.5px; font-weight:800; color:${T.brand}; margin-bottom:6px; display:block; text-transform:uppercase; letter-spacing:.06em; }
+      .vtx-field { margin-bottom:14px; }
+
+      /* BUTTONS — χρυσό με σκούρο κείμενο (premium, υψηλή αντίθεση) */
+      .vtx-btn { background: linear-gradient(135deg, ${T.brandGlow}, ${T.brand}); color:#1a1405; border:none;
+        border-radius:13px; padding:13px 24px; font-weight:800; font-family:${FONT_DISPLAY}; font-size:14px;
+        cursor:pointer; transition:transform .1s, box-shadow .15s; box-shadow:0 6px 20px ${T.brand}44; }
+      .vtx-btn:hover { transform:translateY(-1px); box-shadow:0 8px 26px ${T.brand}66; }
+      .vtx-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+      .vtx-btn-ghost { background:${T.surfaceHi}; color:${T.brandGlow}; border:1px solid ${T.brandLine};
+        border-radius:13px; padding:11px 18px; font-weight:700; font-size:13px; cursor:pointer; }
+      .vtx-btn-danger { background:${T.lossSoft}; color:${T.loss}; border:1px solid ${T.loss}55; border-radius:10px; padding:7px 13px; font-size:12px; font-weight:700; cursor:pointer; }
+
+      .vtx-checkbox-row { display:flex; align-items:center; gap:10px; padding:8px 0; }
+      .vtx-tag { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:800; }
+      .vtx-tag-warn { background:${T.warnSoft}; color:${T.warn}; }
+      .vtx-tag-danger { background:${T.lossSoft}; color:${T.loss}; }
+      .vtx-tag-gain { background:${T.gainSoft}; color:${T.gain}; }
+      .vtx-gate { border-radius:14px; padding:16px; margin-top:8px; border:1px solid; transition:all .2s; }
+      .vtx-gate-ok { background:${T.gainSoft}; border-color:${T.gain}55; }
+      .vtx-gate-warn { background:${T.warnSoft}; border-color:${T.warn}66; }
+      .vtx-lang-toggle { display:flex; background:${T.surfaceHi}; border-radius:10px; padding:3px; border:1px solid ${T.brandLine}; }
+      .vtx-lang-btn { border:none; background:transparent; color:${T.textMuted}; padding:6px 12px; border-radius:8px; font-weight:800; font-size:12px; cursor:pointer; }
+      .vtx-lang-btn.active { background:linear-gradient(135deg,${T.brandGlow},${T.brand}); color:#1a1405; }
+      .vtx-trade-row { border:1px solid ${T.brandLine}; border-radius:14px; padding:14px 16px; margin-bottom:10px;
+        background: linear-gradient(180deg, ${T.cardTop}, ${T.cardBot}); }
+      .vtx-divider { height:1px; background:${T.brandLine}; margin:18px 0; }
     `}</style>
   );
 }
@@ -418,30 +588,29 @@ function GlobalStyle() {
 /* ============================================================
    DISCIPLINE RING (signature element)
    ============================================================ */
-function DisciplineRing({ discipline, psychology, execution, risk, size = 180 }) {
-  const cx = size / 2, cy = size / 2, r1 = size / 2 - 10, r2 = r1 - 14, r3 = r2 - 14, r4 = r3 - 14;
-  const arc = (radius, pct, color) => {
-    const circumference = 2 * Math.PI * radius;
-    const dash = (pct / 100) * circumference;
-    return (
-      <circle
-        cx={cx} cy={cy} r={radius} fill="none" stroke={color} strokeWidth="10"
-        strokeDasharray={`${dash} ${circumference - dash}`}
-        strokeLinecap="round" transform={`rotate(-90 ${cx} ${cy})`}
-        style={{ transition: "stroke-dasharray 1s ease" }}
-      />
-    );
-  };
-  const bg = (radius) => <circle cx={cx} cy={cy} r={radius} fill="none" stroke={T.borderSoft} strokeWidth="10" />;
-  const total = Math.round((discipline + psychology + execution + risk) / 4);
+function DisciplineRing({ score = 0, size = 190 }) {
+  // Ένα μοναδικό χρυσό gauge — καθαρό premium, όχι πολύχρωμα δαχτυλίδια.
+  const cx = size / 2, cy = size / 2, r = size / 2 - 16, sw = 14;
+  const circ = 2 * Math.PI * r;
+  const dash = (Math.max(0, Math.min(100, score)) / 100) * circ;
+  const gid = "goldgauge";
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      {bg(r1)}{arc(r1, discipline, T.brand)}
-      {bg(r2)}{arc(r2, psychology, T.info)}
-      {bg(r3)}{arc(r3, execution, T.gain)}
-      {bg(r4)}{arc(r4, risk, T.warn)}
-      <text x={cx} y={cy - 4} textAnchor="middle" fontFamily={FONT_MONO} fontSize="30" fontWeight="700" fill={T.text}>{total}</text>
-      <text x={cx} y={cy + 16} textAnchor="middle" fontFamily={FONT_BODY} fontSize="11" fill={T.textMuted}>/ 100</text>
+      <defs>
+        <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor={T.brandGlow} />
+          <stop offset="100%" stopColor={T.brandDeep} />
+        </linearGradient>
+      </defs>
+      <circle cx={cx} cy={cy} r={r} fill="none" stroke="#241d0e" strokeWidth={sw} />
+      <circle
+        cx={cx} cy={cy} r={r} fill="none" stroke={`url(#${gid})`} strokeWidth={sw}
+        strokeDasharray={`${dash} ${circ - dash}`} strokeLinecap="round"
+        transform={`rotate(-90 ${cx} ${cy})`}
+        style={{ transition: "stroke-dasharray 1s ease", filter: `drop-shadow(0 0 8px ${T.brand}88)` }}
+      />
+      <text x={cx} y={cy - 2} textAnchor="middle" fontFamily={FONT_MONO} fontSize="40" fontWeight="700" fill={T.brandGlow}>{Math.round(score)}</text>
+      <text x={cx} y={cy + 22} textAnchor="middle" fontFamily={FONT_DISPLAY} fontSize="10" fontWeight="700" letterSpacing="2" fill={T.brandDeep}>SCORE / 100</text>
     </svg>
   );
 }
@@ -584,54 +753,7 @@ function TradingJournalApp() {
   const ruleVal = (id) => rules.find((r) => r.id === id);
 
   /* ---------- STATS ---------- */
-  const stats = useMemo(() => {
-    const closedTrades = trades.filter((t) => t.status !== "open");
-    const openCount = trades.length - closedTrades.length;
-    const totalPnl = closedTrades.reduce((sum, t) => sum + (parseFloat(t.pnl) || 0), 0);
-    const wins = closedTrades.filter((t) => (parseFloat(t.pnl) || 0) > 0);
-    const losses = closedTrades.filter((t) => (parseFloat(t.pnl) || 0) < 0);
-    const winRate = closedTrades.length ? Math.round((wins.length / closedTrades.length) * 100) : 0;
-    const avgWin = wins.length ? wins.reduce((a, t) => a + parseFloat(t.pnl), 0) / wins.length : 0;
-    const avgLoss = losses.length ? Math.abs(losses.reduce((a, t) => a + parseFloat(t.pnl), 0) / losses.length) : 0;
-    const expectancy = closedTrades.length ? ((wins.length / closedTrades.length) * avgWin - (losses.length / closedTrades.length) * avgLoss) : 0;
-    const last7 = trades.filter((t) => Date.now() - new Date(t.date).getTime() < 7 * 24 * 3600 * 1000);
-    const violationsCount = last7.reduce((a, t) => a + (t.ruleViolations?.length || 0), 0);
-    const planFollowedPct = trades.length ? Math.round((trades.filter((t) => t.followedPlan).length / trades.length) * 100) : 0;
-    const noViolationPct = trades.length ? Math.round((trades.filter((t) => !t.ruleViolations?.length).length / trades.length) * 100) : 100;
-    const calmPct = trades.length ? Math.round((trades.filter((t) => FEELING_CALM_KEYS.includes(t.feelingBefore)).length / trades.length) * 100) : 0;
-    const riskOkPct = trades.length ? Math.round((trades.filter((t) => (parseFloat(t.riskPercent) || 0) <= (ruleVal("maxRisk")?.value || 1)).length / trades.length) * 100) : 100;
-
-    const bySession = {};
-    for (const t of closedTrades) {
-      const key = t.session || "Other";
-      if (!bySession[key]) bySession[key] = { count: 0, pnl: 0, wins: 0 };
-      bySession[key].count++;
-      bySession[key].pnl += parseFloat(t.pnl) || 0;
-      if ((parseFloat(t.pnl) || 0) > 0) bySession[key].wins++;
-    }
-    const sessionStats = Object.entries(bySession)
-      .map(([session, v]) => ({ session, count: v.count, pnl: v.pnl, winRate: Math.round((v.wins / v.count) * 100) }))
-      .sort((a, b) => b.count - a.count);
-
-    const byAsset = {};
-    for (const t of closedTrades) {
-      const key = t.asset || "?";
-      if (!byAsset[key]) byAsset[key] = { count: 0, pnl: 0, wins: 0 };
-      byAsset[key].count++;
-      byAsset[key].pnl += parseFloat(t.pnl) || 0;
-      if ((parseFloat(t.pnl) || 0) > 0) byAsset[key].wins++;
-    }
-    const assetStats = Object.entries(byAsset)
-      .map(([asset, v]) => ({ asset, count: v.count, pnl: v.pnl, winRate: Math.round((v.wins / v.count) * 100) }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 6);
-
-    return {
-      totalPnl, winRate, count: closedTrades.length, openCount, expectancy, violationsCount,
-      discipline: planFollowedPct, psychology: calmPct, execution: noViolationPct, risk: riskOkPct,
-      sessionStats, assetStats,
-    };
-  }, [trades, rules]);
+  const stats = useMemo(() => buildStats(trades, ruleVal("maxRisk")?.value || 1), [trades, rules]);
 
   /* ---------- LIVE PRE-TRADE GATE ---------- */
   function computeAutoRiskPercent(form) {
@@ -812,7 +934,11 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
       <GlobalStyle />
       <div className="vtx-header">
         <div className="vtx-brand">
-          <TmindyLogoImg height={44} />
+          <img src={TMINDY_LOGO_URI} alt="tMindy" className="vtx-logo-img" />
+          <div>
+            <div className="vtx-wordmark">tMindy</div>
+            <div className="vtx-tagline">DISCIPLINE · PSYCHOLOGY · EXECUTION · RISK</div>
+          </div>
         </div>
         <div className="vtx-lang-toggle">
           <button className={`vtx-lang-btn ${lang === "el" ? "active" : ""}`} onClick={() => setLang("el")}>ΕΛ</button>
@@ -827,7 +953,7 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
       </div>
 
       <div className="vtx-main">
-        {tab === "dashboard" && <Dashboard s={s} stats={stats} trades={trades} lang={lang} />}
+        {tab === "dashboard" && <Dashboard s={s} trades={trades} rules={rules} lang={lang} setTab={setTab} />}
         {tab === "newTrade" && <NewTrade s={s} lang={lang} evaluateGate={evaluateGate} addTrade={addTrade} setTab={setTab} customRules={customRules} />}
         {tab === "trades" && <TradesList s={s} trades={trades} deleteTrade={deleteTrade} analyzeTrade={analyzeTrade} analyzingId={analyzingId} closeTrade={closeTrade} lang={lang} />}
         {tab === "rules" && <RulesTab s={s} rules={rules} setRules={setRules} accountBalance={accountBalance} setAccountBalance={setAccountBalance} customRules={customRules} setCustomRules={setCustomRules} lang={lang} />}
@@ -843,125 +969,191 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
 /* ============================================================
    DASHBOARD
    ============================================================ */
-function Dashboard({ s, stats, trades, lang }) {
-  const recentViolations = trades
-    .filter((t) => Date.now() - new Date(t.date).getTime() < 7 * 24 * 3600 * 1000 && t.ruleViolations?.length)
-    .slice(0, 5);
+function Dashboard({ s, trades, rules, lang, setTab }) {
+  const d = s.dash;
+  const maxRisk = (rules.find((r) => r.id === "maxRisk") || {}).value || 1;
+  const [period, setPeriod] = useState("30");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [briefing, setBriefing] = useState(null);
+  const [briefLoading, setBriefLoading] = useState(false);
+
+  const now = Date.now();
+  const inPeriod = (t) => {
+    const ts = new Date(t.date).getTime();
+    if (isNaN(ts)) return true;
+    if (period === "today") { const n = new Date(); const dt = new Date(ts); return dt.toDateString() === n.toDateString(); }
+    if (period === "all") return true;
+    if (period === "custom") {
+      const f = from ? new Date(from).getTime() : -Infinity;
+      const t2 = to ? new Date(to).getTime() + 86400000 : Infinity;
+      return ts >= f && ts <= t2;
+    }
+    const days = parseInt(period, 10) || 30;
+    return now - ts < days * 86400000;
+  };
+  const filtered = useMemo(() => trades.filter(inPeriod), [trades, period, from, to]);
+  const st = useMemo(() => buildStats(filtered, maxRisk), [filtered, maxRisk]);
+
+  const ruleVal = (id) => (rules.find((r) => r.id === id) || {}).value;
+  const closedSorted = [...trades].filter((t) => t.status !== "open").sort((a, b) => new Date(b.date) - new Date(a.date));
+  let streak = 0;
+  for (const t of closedSorted) { if ((parseFloat(t.pnl) || 0) < 0) streak++; else break; }
+  const todayCount = trades.filter((t) => { const dt = new Date(t.date); return dt.toDateString() === new Date().toDateString(); }).length;
+  const maxTradesRule = ruleVal("maxTrades");
+  const stopLossesRule = ruleVal("stopLosses");
+  const PRINCIPLES = lang === "el"
+    ? ["Stop-loss = ασφάλιστρο, όχι αποτυχία.", "Process over outcome: έλεγξε τη διαδικασία, όχι μόνο το PnL.", "Ένα trade δεν αποδεικνύει τίποτα — μετράει το δείγμα (10+).", "Κανείς δεν ξέρει τι θα κάνει η αγορά. Κερδίζεις με συνέπεια.", "Μετά από σειρά losses: 45' break πριν συνεχίσεις."]
+    : ["Stop-loss = insurance, not failure.", "Process over outcome: check the process, not just PnL.", "One trade proves nothing — the sample (10+) does.", "Nobody knows what the market will do. You win with consistency.", "After a string of losses: take a 45' break before continuing."];
+  const principle = PRINCIPLES[new Date().getDate() % PRINCIPLES.length];
+  const prepLines = [];
+  if (maxTradesRule && todayCount >= maxTradesRule) prepLines.push(lang === "el" ? `Έφτασες ${todayCount}/${maxTradesRule} trades σήμερα — σκέψου να σταματήσεις.` : `You hit ${todayCount}/${maxTradesRule} trades today — consider stopping.`);
+  else if (maxTradesRule) prepLines.push(lang === "el" ? `Trades σήμερα: ${todayCount}/${maxTradesRule}.` : `Trades today: ${todayCount}/${maxTradesRule}.`);
+  if (stopLossesRule && streak >= stopLossesRule) prepLines.push(lang === "el" ? `${streak} συνεχόμενες ζημιές — κάνε break, μη μπεις σε revenge.` : `${streak} losses in a row — take a break, avoid revenge.`);
+  else if (streak > 0) prepLines.push(lang === "el" ? `Τελευταία: ${streak} ${streak === 1 ? "ζημιά" : "ζημιές"} στη σειρά. Μείνε ήρεμος/η.` : `Recently: ${streak} loss${streak === 1 ? "" : "es"} in a row. Stay calm.`);
+  prepLines.push((lang === "el" ? "Αρχή ημέρας: " : "Principle: ") + principle);
+
+  async function askBriefing() {
+    setBriefLoading(true); setBriefing(null);
+    const recent = closedSorted.slice(0, 12).map((t) => ({ asset: t.asset, pnl: t.pnl, session: t.session, feelingBefore: t.feelingBefore, followedPlan: t.followedPlan, revenge: t.revengeFlag }));
+    const prompt = "You are a trading psychology coach doing a SHORT pre-session briefing.\n\n" + COACHING_FRAMEWORK + "\n\nRespond in " + (lang === "el" ? "Greek" : "English") + ", max 4 sentences, direct and specific — reference the trader's recent numbers/patterns. Give 1 concrete thing to watch out for today and 1 reminder. Context: trades today=" + todayCount + (maxTradesRule ? "/" + maxTradesRule : "") + ", current loss streak=" + streak + ". Recent closed trades: " + JSON.stringify(recent) + "\nPlain text only.";
+    try { const txt = await callClaude(prompt, false, 320); setBriefing(txt); }
+    catch (e) { setBriefing((lang === "el" ? "Σφάλμα: " : "Error: ") + (e && e.message ? e.message : String(e))); }
+    setBriefLoading(false);
+  }
+
+  const money = (v) => (v >= 0 ? "+" : "") + (Math.round(v * 100) / 100).toLocaleString();
+  const pf = st.profitFactor === Infinity ? "∞" : st.profitFactor.toFixed(2);
+  const periods = [["today", d.pToday], ["7", d.p7], ["15", d.p15], ["30", d.p30], ["all", d.pAll], ["custom", d.pCustom]];
+
   return (
     <div>
-      <div className="vtx-grid vtx-grid-4" style={{ marginBottom: 20 }}>
-        <StatCard label={s.dash.pnl} value={`${stats.totalPnl >= 0 ? "+" : ""}${stats.totalPnl.toFixed(2)}`} color={stats.totalPnl >= 0 ? T.gain : T.loss} />
-        <StatCard label={s.dash.winRate} value={`${stats.winRate}%`} color={T.brand} />
-        <StatCard label={s.dash.trades} value={stats.count} color={T.info} />
-        <StatCard label={s.dash.expectancy} value={stats.expectancy.toFixed(2)} color={stats.expectancy >= 0 ? T.gain : T.loss} />
+      <div className="vtx-prep">
+        <div className="vtx-prep-k">🎯 {d.prepTitle}</div>
+        {prepLines.map((ln, i) => (
+          <div key={i} className="vtx-prep-line"><span className="vtx-prep-dot">›</span><span>{ln}</span></div>
+        ))}
+        <div style={{ display: "flex", gap: 8, marginTop: 14, flexWrap: "wrap" }}>
+          <button className="vtx-btn" onClick={() => setTab("psychology")}>{d.prepStart}</button>
+          <button className="vtx-btn-ghost" onClick={askBriefing} disabled={briefLoading}>{briefLoading ? d.prepThinking : "✨ " + d.prepAsk}</button>
+        </div>
+        {briefing && (
+          <div style={{ marginTop: 14, padding: 14, borderRadius: 12, background: "#100d08", border: "1px solid " + T.brandLine, fontSize: 13.5, lineHeight: 1.55 }}>{briefing}</div>
+        )}
       </div>
-      {stats.openCount > 0 && (
-        <div className="vtx-card" style={{ marginBottom: 20, display: "flex", alignItems: "center", gap: 10, padding: "12px 18px" }}>
-          <span className="vtx-tag" style={{ background: T.brandSoft, color: T.brand }}>{s.dash.openPositions}</span>
-          <span className="vtx-mono" style={{ fontSize: 16, fontWeight: 700 }}>{stats.openCount}</span>
+
+      <div className="vtx-section-title">{d.periodTitle}</div>
+      <div className="vtx-chips">
+        {periods.map(([k, lbl]) => (
+          <button key={k} className={"vtx-chip" + (period === k ? " active" : "")} onClick={() => setPeriod(k)}>{lbl}</button>
+        ))}
+      </div>
+      {period === "custom" && (
+        <div className="vtx-grid vtx-grid-2" style={{ marginBottom: 16 }}>
+          <div><label className="vtx-label">{d.from}</label><input type="date" className="vtx-input" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
+          <div><label className="vtx-label">{d.to}</label><input type="date" className="vtx-input" value={to} onChange={(e) => setTo(e.target.value)} /></div>
         </div>
       )}
 
-      <div className="vtx-grid vtx-grid-2">
-        <div className="vtx-card" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <div className="vtx-section-title" style={{ alignSelf: "flex-start" }}>{s.dash.disciplineRing}</div>
-          <DisciplineRing discipline={stats.discipline} psychology={stats.psychology} execution={stats.execution} risk={stats.risk} />
-          <div style={{ display: "flex", gap: 14, marginTop: 14, flexWrap: "wrap", justifyContent: "center" }}>
-            <Legend color={T.brand} label={s.dash.discipline} value={stats.discipline} />
-            <Legend color={T.info} label={s.dash.psychology} value={stats.psychology} />
-            <Legend color={T.gain} label={s.dash.execution} value={stats.execution} />
-            <Legend color={T.warn} label={s.dash.risk} value={stats.risk} />
+      <div className="vtx-grid vtx-grid-4">
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.netPnl}</div><div className="vtx-kpi-value" style={{ color: st.totalPnl >= 0 ? T.gain : T.loss }}>{money(st.totalPnl)}</div></div>
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.winRate}</div><div className="vtx-kpi-value" style={{ color: T.brandGlow }}>{st.winRate}%</div></div>
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.trades}</div><div className="vtx-kpi-value">{st.count}{st.openCount ? <span style={{ fontSize: 13, color: T.brandDeep }}> +{st.openCount}</span> : null}</div></div>
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.profitFactor}</div><div className="vtx-kpi-value" style={{ color: T.brandGlow }}>{pf}</div></div>
+      </div>
+
+      <div className="vtx-card" style={{ marginTop: 16 }}>
+        <div className="vtx-section-title">{d.overall}</div>
+        <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+          <DisciplineRing score={st.overall} />
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <Bar label={d.discipline} val={st.discipline} />
+            <Bar label={d.psychology} val={st.psychology} />
+            <Bar label={d.execution} val={st.execution} />
+            <Bar label={d.risk} val={st.risk} />
           </div>
         </div>
+        <div className="vtx-grid vtx-grid-4" style={{ marginTop: 16 }}>
+          <MiniKpi label={d.avgWin} value={money(st.avgWin)} color={T.gain} />
+          <MiniKpi label={d.avgLoss} value={"-" + (Math.round(st.avgLoss * 100) / 100).toLocaleString()} color={T.loss} />
+          <MiniKpi label={d.revenge} value={st.revengeCount} color={st.revengeCount ? T.loss : T.textMuted} />
+          <MiniKpi label={d.violationsN} value={st.violationsCount} color={st.violationsCount ? T.warn : T.textMuted} />
+        </div>
+      </div>
 
-        <div className="vtx-card">
-          <div className="vtx-section-title">{s.dash.violations}</div>
-          {!recentViolations.length && <div style={{ color: T.textFaint, fontSize: 14 }}>—</div>}
-          {recentViolations.map((t) => (
-            <div key={t.id} style={{ marginBottom: 10, fontSize: 13 }}>
-              <div style={{ fontWeight: 700 }}>{t.asset}</div>
-              {t.ruleViolations.map((v, i) => (
-                <div key={i} style={{ color: T.loss, fontSize: 12 }}>• {v}</div>
-              ))}
+      {st.count === 0 ? (
+        <div className="vtx-card" style={{ marginTop: 16, textAlign: "center", color: T.textMuted }}>{d.noPeriodTrades}</div>
+      ) : (
+        <>
+          <div className="vtx-grid vtx-grid-2" style={{ marginTop: 16 }}>
+            <div className="vtx-wl good">
+              <div className="vtx-wl-h" style={{ color: T.gain }}>✔ {d.wentRight}</div>
+              {st.bestAsset && <WLItem k={d.bestAsset} v={st.bestAsset.asset + " · " + money(st.bestAsset.pnl)} pos />}
+              {st.bestSession && <WLItem k={d.bestSession} v={st.bestSession.session + " · " + money(st.bestSession.pnl)} pos />}
+              <WLItem k={d.winRate} v={st.winRate + "%"} pos={st.winRate >= 50} />
+              <WLItem k={d.discipline} v={st.discipline + "%"} pos={st.discipline >= 60} />
             </div>
-          ))}
-        </div>
-      </div>
+            <div className="vtx-wl bad">
+              <div className="vtx-wl-h" style={{ color: T.loss }}>✘ {d.wentWrong}</div>
+              {st.worstAsset && <WLItem k={d.worstAsset} v={st.worstAsset.asset + " · " + money(st.worstAsset.pnl)} />}
+              {st.worstSession && <WLItem k={d.worstSession} v={st.worstSession.session + " · " + money(st.worstSession.pnl)} />}
+              <WLItem k={d.revenge} v={String(st.revengeCount)} pos={st.revengeCount === 0} />
+              <WLItem k={d.violationsN} v={String(st.violationsCount)} pos={st.violationsCount === 0} />
+            </div>
+          </div>
 
-      <div className="vtx-grid vtx-grid-2" style={{ marginTop: 20 }}>
-        <div className="vtx-card">
-          <div className="vtx-section-title">{s.dash.bySession}</div>
-          {!stats.sessionStats?.length && <div style={{ color: T.textFaint, fontSize: 14 }}>—</div>}
-          {stats.sessionStats?.map((row) => (
-            <BreakdownRow key={row.session} label={row.session} count={row.count} pnl={row.pnl} winRate={row.winRate} />
-          ))}
-        </div>
-        <div className="vtx-card">
-          <div className="vtx-section-title">{s.dash.byAsset}</div>
-          {!stats.assetStats?.length && <div style={{ color: T.textFaint, fontSize: 14 }}>—</div>}
-          {stats.assetStats?.map((row) => (
-            <BreakdownRow key={row.asset} label={row.asset} count={row.count} pnl={row.pnl} winRate={row.winRate} />
-          ))}
-        </div>
-      </div>
-
-      <div className="vtx-card" style={{ marginTop: 20 }}>
-        <div className="vtx-section-title">{s.dash.recent}</div>
-        {!trades.length && <div style={{ color: T.textFaint }}>{s.dash.noTrades}</div>}
-        {trades.slice(0, 5).map((t) => <TradeRowMini key={t.id} t={t} />)}
-      </div>
+          <div className="vtx-grid vtx-grid-2" style={{ marginTop: 16 }}>
+            <div className="vtx-card">
+              <div className="vtx-section-title">{d.bySession}</div>
+              {st.sessionStats.map((x) => <BreakRow key={x.session} label={x.session} count={x.count} pnl={x.pnl} winRate={x.winRate} />)}
+            </div>
+            <div className="vtx-card">
+              <div className="vtx-section-title">{d.byAsset}</div>
+              {st.assetStats.map((x) => <BreakRow key={x.asset} label={x.asset} count={x.count} pnl={x.pnl} winRate={x.winRate} />)}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
 
-function StatCard({ label, value, color }) {
+function Bar({ label, val }) {
   return (
-    <div className="vtx-card">
-      <div className="vtx-stat-label">{label}</div>
-      <div className="vtx-stat-value" style={{ color }}>{value}</div>
+    <div className="vtx-bar">
+      <div className="vtx-bar-lbl">{label}</div>
+      <div className="vtx-bar-track"><div className="vtx-bar-fill" style={{ width: Math.max(0, Math.min(100, val)) + "%" }} /></div>
+      <div className="vtx-bar-val">{val}%</div>
     </div>
   );
 }
 
-function Legend({ color, label, value }) {
+function MiniKpi({ label, value, color }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}>
-      <div style={{ width: 10, height: 10, borderRadius: "50%", background: color }} />
-      <span style={{ color: T.textMuted }}>{label}</span>
-      <span className="vtx-mono" style={{ fontWeight: 700 }}>{value}%</span>
+    <div style={{ textAlign: "center" }}>
+      <div className="vtx-kpi-label" style={{ marginBottom: 4 }}>{label}</div>
+      <div className="vtx-mono" style={{ fontSize: 18, fontWeight: 700, color: color || T.text }}>{value}</div>
     </div>
   );
 }
 
-function BreakdownRow({ label, count, pnl, winRate }) {
+function WLItem({ k, v, pos }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "9px 0", borderBottom: `1px solid ${T.borderSoft}` }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ fontWeight: 700, fontSize: 14 }}>{label}</span>
-        <span style={{ fontSize: 11, color: T.textFaint }}>({count})</span>
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <span className="vtx-mono" style={{ fontSize: 12, color: T.textMuted }}>{winRate}% WR</span>
-        <span className="vtx-mono" style={{ fontSize: 14, fontWeight: 700, color: pnl >= 0 ? T.gain : T.loss }}>
-          {pnl >= 0 ? "+" : ""}{pnl.toFixed(2)}
-        </span>
-      </div>
+    <div className="vtx-wl-item">
+      <span style={{ color: T.textMuted }}>{k}</span>
+      <span className="vtx-mono" style={{ fontWeight: 700, color: pos ? T.gain : T.loss }}>{v}</span>
     </div>
   );
 }
 
-function TradeRowMini({ t }) {
-  const pnl = parseFloat(t.pnl) || 0;
+function BreakRow({ label, count, pnl, winRate }) {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: `1px solid ${T.borderSoft}` }}>
-      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-        <span style={{ fontWeight: 700 }}>{t.asset}</span>
-        <span style={{ fontSize: 11, color: T.textMuted }}>{t.direction}</span>
-        {t.revengeFlag && <span className="vtx-tag vtx-tag-danger">⚠</span>}
+    <div style={{ marginBottom: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 5 }}>
+        <span style={{ fontWeight: 700 }}>{label} <span style={{ color: T.textFaint, fontWeight: 400 }}>· {count}</span></span>
+        <span className="vtx-mono" style={{ color: pnl >= 0 ? T.gain : T.loss, fontWeight: 700 }}>{(pnl >= 0 ? "+" : "") + (Math.round(pnl * 100) / 100).toLocaleString()}</span>
       </div>
-      <span className="vtx-mono" style={{ color: pnl >= 0 ? T.gain : T.loss, fontWeight: 700 }}>
-        {pnl >= 0 ? "+" : ""}{pnl.toFixed(2)}
-      </span>
+      <div className="vtx-bar-track"><div className="vtx-bar-fill" style={{ width: Math.max(4, Math.min(100, winRate)) + "%" }} /></div>
     </div>
   );
 }
