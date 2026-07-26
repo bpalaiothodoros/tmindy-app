@@ -55,8 +55,8 @@ const html = `<!doctype html>
 <meta name="description" content="tMindy — AI-powered trading journal & behavioral psychology coach." />
 <meta name="theme-color" content="#0A0A0A" />
 <link rel="manifest" href="manifest.webmanifest" />
-<link rel="icon" href="tmindy-logo-official.png" />
-<link rel="apple-touch-icon" href="tmindy-logo-official.png" />
+<link rel="icon" href="tmindy-icon-192.png" />
+<link rel="apple-touch-icon" href="tmindy-icon-512.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="tMindy" />
