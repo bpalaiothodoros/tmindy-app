@@ -71,7 +71,9 @@ const STR = {
       dashboard: "Πίνακας",
       newTrade: "Νέο Trade",
       trades: "Trades",
-      psychology: "Ψυχολογία",
+      analytics: "Στατιστικά",
+      blueprint: "Trading Blueprint",
+      psychology: "Ημερολόγιο",
       rules: "Κανόνες",
       coach: "AI Coach",
       import: "Import",
@@ -119,7 +121,8 @@ const STR = {
       prepTitle: "Προετοιμασία πριν το trading",
       prepStart: "Pre-Market Check",
       prepAsk: "AI Briefing",
-      prepThinking: "Ετοιμάζω briefing..."
+      prepThinking: "Ετοιμάζω briefing...",
+      goAnalytics: "Αναλυτικά Στατιστικά"
     },
     form: {
       title: "Καταγραφή νέου trade",
@@ -242,6 +245,62 @@ const STR = {
       bAction: "Μία μικρή πράξη μέσα στις επόμενες 24 ώρες για να τη ζήσω:",
       placeholder: "Γράψε εδώ..."
     },
+    bp: {
+      title: "Trading Blueprint",
+      subtitle: "Το προσωπικό σου σχέδιο trading — ταυτότητα, στρατηγική, ρίσκο, ψυχολογία, ρουτίνα, κανόνες. Πάνω σε αυτό βασίζονται όλες οι αναλύσεις του AI Coach.",
+      save: "Αποθήκευση",
+      saved: "Αποθηκεύτηκε ✓",
+      chapters: {
+        identity: "Ταυτότητα",
+        strategy: "Στρατηγική",
+        risk: "Ρίσκο & Κανόνες",
+        psychology: "Ψυχολογία",
+        routine: "Ρουτίνα",
+        ai: "AI Coach",
+        notes: "Σημειώσεις"
+      },
+      idMission: "Trading Mission — ποιος trader θέλω να γίνω;",
+      idLong: "Μακροπρόθεσμος στόχος",
+      idShort: "Βραχυπρόθεσμος στόχος",
+      idPrinciplesTitle: "Οι βασικές μου αρχές",
+      idPersonalRules: "Προσωπικοί κανόνες",
+      idExperience: "Εμπειρία",
+      idMarkets: "Αγορές",
+      idStyle: "Style",
+      idTimeframes: "Αγαπημένα Timeframes",
+      stName: "Όνομα στρατηγικής",
+      stDesc: "Περιγραφή",
+      stSetupType: "Τύπος Setup",
+      stConfirmations: "Απαραίτητες επιβεβαιώσεις",
+      stEntry: "Κανόνες εισόδου",
+      stExit: "Κανόνες εξόδου",
+      stAvoid: "Πότε ΔΕΝ κάνω trade",
+      riskExtraTitle: "Επιπλέον όρια ρίσκου",
+      riskWeekly: "Max Weekly Loss (%)",
+      riskMonthly: "Max Monthly Loss (%)",
+      riskDrawdown: "Max Drawdown (%)",
+      riskLeverage: "Leverage",
+      riskSizing: "Position Sizing",
+      criticalTitle: "Απαραβίαστοι Κανόνες",
+      criticalSub: "Δέσμευση προς τον εαυτό σου — τσέκαρε ό,τι υπόσχεσαι να τηρείς πάντα.",
+      addCustom: "Προσθήκη δικού σου κανόνα",
+      addPlaceholder: "π.χ. Δεν κάνω trade Παρασκευή απόγευμα",
+      add: "Προσθήκη",
+      psyFomo: "Αν νιώσω FOMO...",
+      psyRevenge: "Αν νιώσω revenge...",
+      psy3Loss: "Μετά από 3 χαμένα trades...",
+      psy3Win: "Μετά από 3 κερδισμένα trades...",
+      psyStop: "Πότε σταματώ εντελώς το trading;",
+      psyRecover: "Πώς επανέρχομαι ψυχολογικά;",
+      routineMorning: "Πρωινή ρουτίνα",
+      routineEvening: "Βραδινή ρουτίνα",
+      routineWeekend: "Εβδομαδιαία ανασκόπηση",
+      routineNote: "Το λεπτομερές Pre-Market Check & Post-Market Review γίνεται στο Ημερολόγιο.",
+      routineLink: "Άνοιγμα Ημερολογίου",
+      aiToneTitle: "Πώς θέλω να μου μιλάει το AI Coach",
+      notesLabel: "Ελεύθερες σημειώσεις — παρατηρήσεις, ιδέες, μαθήματα, νέα setups",
+      placeholder: "Γράψε εδώ..."
+    },
     settings: {
       title: "Ρυθμίσεις",
       aiTitle: "AI Coach — API Key",
@@ -263,10 +322,10 @@ const STR = {
       keyMissing: "Δεν έχει οριστεί API key ακόμα."
     },
     nav: {
-      more: "Περισσότερα",
+      more: "Μενού",
+      gQuick: "ΓΡΗΓΟΡΗ ΠΡΟΣΒΑΣΗ",
       gTrading: "TRADING",
-      gAnalytics: "ANALYTICS",
-      gMindset: "MINDSET",
+      gPerformance: "ΑΠΟΔΟΣΗ",
       gSystem: "ΣΥΣΤΗΜΑ"
     },
     common: {
@@ -283,7 +342,9 @@ const STR = {
       dashboard: "Dashboard",
       newTrade: "New Trade",
       trades: "Trades",
-      psychology: "Psychology",
+      analytics: "Analytics",
+      blueprint: "Trading Blueprint",
+      psychology: "Journal",
       rules: "Rules",
       coach: "AI Coach",
       import: "Import",
@@ -331,7 +392,8 @@ const STR = {
       prepTitle: "Prepare before trading",
       prepStart: "Pre-Market Check",
       prepAsk: "AI Briefing",
-      prepThinking: "Preparing briefing..."
+      prepThinking: "Preparing briefing...",
+      goAnalytics: "View Full Analytics"
     },
     form: {
       title: "Log a new trade",
@@ -454,6 +516,62 @@ const STR = {
       bAction: "One small action within the next 24h to live it:",
       placeholder: "Write here..."
     },
+    bp: {
+      title: "Trading Blueprint",
+      subtitle: "Your personal trading plan — identity, strategy, risk, psychology, routine, rules. Every AI Coach analysis is grounded in this.",
+      save: "Save",
+      saved: "Saved ✓",
+      chapters: {
+        identity: "Identity",
+        strategy: "Strategy",
+        risk: "Risk & Rules",
+        psychology: "Psychology",
+        routine: "Routine",
+        ai: "AI Coach",
+        notes: "Notes"
+      },
+      idMission: "Trading Mission — who do I want to become as a trader?",
+      idLong: "Long-term goal",
+      idShort: "Short-term goal",
+      idPrinciplesTitle: "My core principles",
+      idPersonalRules: "Personal rules",
+      idExperience: "Experience",
+      idMarkets: "Markets",
+      idStyle: "Style",
+      idTimeframes: "Favorite Timeframes",
+      stName: "Strategy name",
+      stDesc: "Description",
+      stSetupType: "Setup Type",
+      stConfirmations: "Required confirmations",
+      stEntry: "Entry rules",
+      stExit: "Exit rules",
+      stAvoid: "When I do NOT trade",
+      riskExtraTitle: "Extra risk limits",
+      riskWeekly: "Max Weekly Loss (%)",
+      riskMonthly: "Max Monthly Loss (%)",
+      riskDrawdown: "Max Drawdown (%)",
+      riskLeverage: "Leverage",
+      riskSizing: "Position Sizing",
+      criticalTitle: "Non-Negotiable Rules",
+      criticalSub: "A commitment to yourself — check what you promise to always keep.",
+      addCustom: "Add your own rule",
+      addPlaceholder: "e.g. No trading Friday afternoon",
+      add: "Add",
+      psyFomo: "If I feel FOMO...",
+      psyRevenge: "If I feel revenge...",
+      psy3Loss: "After 3 losing trades...",
+      psy3Win: "After 3 winning trades...",
+      psyStop: "When do I stop trading completely?",
+      psyRecover: "How do I recover psychologically?",
+      routineMorning: "Morning routine",
+      routineEvening: "Evening routine",
+      routineWeekend: "Weekly review",
+      routineNote: "The detailed Pre-Market Check & Post-Market Review live in the Journal.",
+      routineLink: "Open Journal",
+      aiToneTitle: "How I want the AI Coach to talk to me",
+      notesLabel: "Free notes — observations, ideas, lessons, new setups",
+      placeholder: "Write here..."
+    },
     settings: {
       title: "Settings",
       aiTitle: "AI Coach — API Key",
@@ -475,10 +593,10 @@ const STR = {
       keyMissing: "No API key set yet."
     },
     nav: {
-      more: "More",
+      more: "Menu",
+      gQuick: "QUICK ACCESS",
       gTrading: "TRADING",
-      gAnalytics: "ANALYTICS",
-      gMindset: "MINDSET",
+      gPerformance: "PERFORMANCE",
       gSystem: "SYSTEM"
     },
     common: {
@@ -525,6 +643,31 @@ const FEELINGS = {
   en: ["Calm", "Anxious", "Excited", "Fearful", "Confident", "Uncertain", "Tired"]
 };
 const FEELING_CALM_KEYS = ["Ήρεμος", "Σίγουρος", "Calm", "Confident"];
+const BP_MARKETS = ["Forex", "Crypto", "Stocks", "Futures", "Commodities", "Indices", "ETFs", "Options"];
+const BP_STYLES = ["Scalping", "Day Trading", "Swing Trading", "Position Trading"];
+const BP_TIMEFRAMES = ["M1", "M5", "M15", "M30", "H1", "H4", "Daily", "Weekly", "Monthly"];
+const BP_SETUP_TYPES = ["Trend Following", "Reversal", "Breakout", "Pullback", "Range", "Liquidity", "Smart Money", "ICT", "Wyckoff", "Custom"];
+const BP_CONFIRMATIONS = ["Market Structure", "BOS", "CHOCH", "Liquidity Sweep", "Order Block", "Fair Value Gap", "Fibonacci", "RSI", "MACD", "Divergence", "EMA", "SMA", "VWAP", "Volume", "ATR", "Multi-Timeframe Confirmation", "Economic News", "Open Interest", "Funding Rate"];
+const BP_EXPERIENCE = {
+  el: ["Αρχάριος", "Μέτριος", "Προχωρημένος", "Επαγγελματίας"],
+  en: ["Beginner", "Intermediate", "Advanced", "Professional"]
+};
+const BP_SIZING = {
+  el: ["Σταθερό Lot", "Σταθερό %", "Kelly Criterion", "Άλλο"],
+  en: ["Fixed Lot", "Fixed %", "Kelly Criterion", "Other"]
+};
+const BP_AI_TONES = {
+  el: ["Φιλικός", "Επαγγελματικός", "Στρατιωτικός", "Μέντορας", "Ψυχολόγος"],
+  en: ["Friendly", "Professional", "Military", "Mentor", "Psychologist"]
+};
+const BP_PRINCIPLES = {
+  el: ["Προστατεύω πάντα το κεφάλαιό μου", "Δεν κυνηγάω την αγορά", "Ακολουθώ το σχέδιό μου", "Δέχομαι το Stop Loss", "Δεν κάνω Revenge Trading", "Δεν κάνω FOMO Trades", "Trade μόνο σε A+ Setup", "Η σωστή εκτέλεση είναι σημαντικότερη από το αποτέλεσμα", "Ποιότητα και όχι ποσότητα", "Περιμένω πάντα επιβεβαίωση"],
+  en: ["I always protect my capital", "I don't chase the market", "I follow my plan", "I accept the Stop Loss", "I don't revenge trade", "I don't take FOMO trades", "I only trade A+ setups", "Correct execution matters more than the outcome", "Quality over quantity", "I always wait for confirmation"]
+};
+const BP_CRITICAL_RULES = {
+  el: ["Δεν μετακινώ ποτέ το Stop Loss", "Δεν κάνω trade από το κινητό", "Δεν αυξάνω ποτέ το risk", "Δεν κάνω revenge trading", "Δεν κάνω trade όταν είμαι κουρασμένος/η", "Δεν κάνω trade όταν είμαι θυμωμένος/η", "Δεν κάνω trade χωρίς ανάλυση", "Δεν ανοίγω πάνω από Χ θέσεις ταυτόχρονα"],
+  en: ["I never move my Stop Loss", "I don't trade from my phone", "I never increase risk", "I don't revenge trade", "I don't trade when tired", "I don't trade when angry", "I don't trade without analysis", "I don't open more than X positions at once"]
+};
 function buildStats(trades) {
   let maxRiskVal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   const closed = trades.filter(t => t.status !== "open");
@@ -752,13 +895,13 @@ function GlobalStyle() {
 
       /* HEADER / BRAND */
       /* HEADER — το λογότυπο (ολόκληρη η εικόνα) κεντραρισμένο, controls πάνω δεξιά */
-      .vtx-header { position:relative; display:flex; align-items:center; justify-content:center;
-        padding: 54px 14px 14px; background: linear-gradient(180deg, #14110a, ${T.bg});
+      .vtx-header { position:relative; display:flex; align-items:center; justify-content:flex-start;
+        padding: 14px 14px 14px 18px; background: linear-gradient(180deg, #14110a, ${T.bg});
         box-shadow: 0 1px 0 ${T.brandLine}, 0 10px 30px -12px #000; }
-      .vtx-logo-full { width: min(300px, 74vw); height:auto; display:block;
+      .vtx-logo-full { width: min(210px, 52vw); height:auto; display:block;
         filter: drop-shadow(0 6px 22px ${T.brand}44); }
-      .vtx-header-ctl { position:absolute; top:12px; right:14px; display:flex; align-items:center; gap:8px; }
-      @media (max-width: 400px) { .vtx-logo-full { width: min(230px, 62vw); } }
+      .vtx-header-ctl { position:absolute; top:14px; right:14px; display:flex; align-items:center; gap:8px; }
+      @media (max-width: 400px) { .vtx-logo-full { width: min(170px, 46vw); } }
       .vtx-brand { display:flex; align-items:center; gap: 14px; }
       .vtx-logo-img { height: 46px; width:auto; display:block;
         filter: drop-shadow(0 4px 18px ${T.brand}55); }
@@ -766,32 +909,27 @@ function GlobalStyle() {
         background:${T.surfaceHi}; color:${T.brand}; display:flex; align-items:center; justify-content:center; cursor:pointer; }
       .vtx-iconbtn:hover { color:${T.brandGlow}; border-color:${T.brand}88; }
 
-      /* ΚΑΤΩ TAB BAR */
-      .vtx-tabbar { position:fixed; left:0; right:0; bottom:0; z-index:60;
-        display:flex; align-items:flex-end; justify-content:space-around;
-        padding:9px 6px calc(14px + env(safe-area-inset-bottom, 0px));
-        background:linear-gradient(180deg,#100d08,#0A0A0A); border-top:1px solid ${T.brandLine};
-        box-shadow:0 -10px 30px -12px #000; }
-      .vtx-tab { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
-        background:none; border:none; cursor:pointer; padding:2px 0;
-        font-family:${FONT_BODY}; font-size:10px; font-weight:700; color:#7d745c; }
-      .vtx-tab.on { color:${T.brandGlow}; }
-      .vtx-tab-fabwrap { flex:0 0 auto; }
-      .vtx-fab { width:52px; height:52px; border-radius:50%; margin-top:-24px;
+      /* ΠΛΩΤΟ ΚΟΥΜΠΙ «ΝΕΟ TRADE» */
+      .vtx-fabfloat { position:fixed; right:18px; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); z-index:55;
+        width:56px; height:56px; border-radius:50%; border:none; cursor:pointer;
         background:linear-gradient(135deg,${T.brandGlow},${T.brand}); color:#1a1405;
         display:flex; align-items:center; justify-content:center;
-        border:3px solid #0A0A0A; box-shadow:0 8px 22px ${T.brand}66; }
-      .vtx-fablabel { font-size:10px; font-weight:800; color:${T.brand}; margin-top:2px; }
+        box-shadow:0 10px 26px ${T.brand}66, 0 0 0 3px #0A0A0A; }
 
-      /* «ΠΕΡΙΣΣΟΤΕΡΑ» SHEET */
+      /* TOP MENU — ανοίγει από πάνω, ένα κουμπί (☰) με όλες τις επιλογές */
       .vtx-sheet-wrap { position:fixed; inset:0; z-index:70; background:rgba(0,0,0,.6);
-        display:flex; align-items:flex-end; animation:vtxfade .18s ease; }
+        display:flex; animation:vtxfade .18s ease; }
+      .vtx-sheet-wrap-top { align-items:flex-start; }
       @keyframes vtxfade { from { opacity:0 } to { opacity:1 } }
-      @keyframes vtxup { from { transform:translateY(14px) } to { transform:translateY(0) } }
+      @keyframes vtxdown { from { transform:translateY(-16px); opacity:.6 } to { transform:translateY(0); opacity:1 } }
       .vtx-sheet { width:100%; max-height:82vh; overflow-y:auto;
         background:linear-gradient(180deg,#181307,#100d08); border-top:1px solid ${T.brand}66;
         border-radius:22px 22px 0 0; padding:12px 16px calc(24px + env(safe-area-inset-bottom, 0px));
-        box-shadow:0 -20px 50px -10px #000; animation:vtxup .2s ease; }
+        box-shadow:0 -20px 50px -10px #000; }
+      .vtx-sheet-top { border-top:none; border-bottom:1px solid ${T.brand}66;
+        border-radius:0 0 22px 22px; padding:calc(14px + env(safe-area-inset-top, 0px)) 16px 24px;
+        box-shadow:0 24px 60px -16px #000; animation:vtxdown .2s ease; max-height:88vh; }
+      .vtx-sheet-topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
       .vtx-sheet-handle { width:40px; height:4px; border-radius:4px; background:${T.brandLine}; margin:2px auto 14px; }
       .vtx-grp { font-size:10px; font-weight:800; color:${T.brandDeep}; letter-spacing:.16em;
         margin:16px 0 8px; display:flex; align-items:center; gap:8px; }
@@ -821,7 +959,7 @@ function GlobalStyle() {
         background: linear-gradient(135deg, ${T.brandGlow}, ${T.brand});
         border-color:${T.brandGlow}; box-shadow:0 4px 16px ${T.brand}44; }
 
-      .vtx-main { padding: 22px 18px calc(110px + env(safe-area-inset-bottom, 0px)); max-width: 1080px; margin: 0 auto; }
+      .vtx-main { padding: 22px 18px calc(90px + env(safe-area-inset-bottom, 0px)); max-width: 1080px; margin: 0 auto; }
 
       /* CARDS */
       .vtx-card { background: linear-gradient(180deg, ${T.cardTop}, ${T.cardBot});
@@ -1135,10 +1273,14 @@ function TradingJournalApp() {
     _useState28 = _slicedToArray(_useState27, 2),
     psyData = _useState28[0],
     setPsyData = _useState28[1];
-  const _useState29 = useState(false),
+  const _useState29 = useState({}),
     _useState30 = _slicedToArray(_useState29, 2),
-    moreOpen = _useState30[0],
-    setMoreOpen = _useState30[1];
+    blueprint = _useState30[0],
+    setBlueprint = _useState30[1];
+  const _useState31 = useState(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    moreOpen = _useState32[0],
+    setMoreOpen = _useState32[1];
   useEffect(() => {
     (async () => {
       let loadedTrades = null;
@@ -1165,6 +1307,10 @@ function TradingJournalApp() {
       try {
         const p = await storage.get("psyData");
         if (p && p.value) setPsyData(JSON.parse(p.value));
+      } catch (e) {}
+      try {
+        const bp = await storage.get("blueprint");
+        if (bp && bp.value) setBlueprint(JSON.parse(bp.value));
       } catch (e) {}
       let alreadySeeded = false;
       try {
@@ -1213,6 +1359,9 @@ function TradingJournalApp() {
   useEffect(() => {
     if (loaded) storage.set("psyData", JSON.stringify(psyData)).catch(() => {});
   }, [psyData, loaded]);
+  useEffect(() => {
+    if (loaded) storage.set("blueprint", JSON.stringify(blueprint)).catch(() => {});
+  }, [blueprint, loaded]);
   const ruleVal = id => rules.find(r => r.id === id);
   const stats = useMemo(() => buildStats(trades, ruleVal("maxRisk")?.value || 1), [trades, rules]);
   function computeAutoRiskPercent(form) {
@@ -1456,10 +1605,10 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
     onClick: () => setLang("en")
   }, "EN")), React.createElement("button", {
     className: "vtx-iconbtn",
-    "aria-label": s.tabs.settings,
-    onClick: () => setTab("settings")
+    "aria-label": s.nav.more,
+    onClick: () => setMoreOpen(true)
   }, React.createElement(Icon, {
-    name: "gear"
+    name: "menu"
   })))), React.createElement("div", {
     className: "vtx-main"
   }, tab === "dashboard" && React.createElement(Dashboard, {
@@ -1468,6 +1617,11 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
     rules: rules,
     lang: lang,
     setTab: setTab
+  }), tab === "analytics" && React.createElement(AnalyticsTab, {
+    s: s,
+    trades: trades,
+    rules: rules,
+    lang: lang
   }), tab === "newTrade" && React.createElement(NewTrade, {
     s: s,
     lang: lang,
@@ -1483,15 +1637,18 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
     analyzingId: analyzingId,
     closeTrade: closeTrade,
     lang: lang
-  }), tab === "rules" && React.createElement(RulesTab, {
+  }), tab === "blueprint" && React.createElement(TradingBlueprintTab, {
     s: s,
+    lang: lang,
+    blueprint: blueprint,
+    setBlueprint: setBlueprint,
     rules: rules,
     setRules: setRules,
     accountBalance: accountBalance,
     setAccountBalance: setAccountBalance,
     customRules: customRules,
     setCustomRules: setCustomRules,
-    lang: lang
+    setTab: setTab
   }), tab === "coach" && React.createElement(CoachTab, {
     s: s,
     trades: trades,
@@ -1514,12 +1671,15 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
     error: importError
   }), tab === "settings" && React.createElement(SettingsTab, {
     s: s
-  })), React.createElement(BottomNav, {
-    s: s,
-    tab: tab,
-    setTab: setTab,
-    onMore: () => setMoreOpen(true)
-  }), moreOpen && React.createElement(MoreSheet, {
+  })), tab !== "newTrade" && React.createElement("button", {
+    className: "vtx-fabfloat",
+    onClick: () => setTab("newTrade"),
+    "aria-label": s.tabs.newTrade
+  }, React.createElement(Icon, {
+    name: "plus",
+    size: 24,
+    strokeWidth: 2.4
+  })), moreOpen && React.createElement(TopMenu, {
     s: s,
     tab: tab,
     setTab: setTab,
@@ -1536,7 +1696,11 @@ const ICON_PATHS = {
   download: "M12 3v12M7 10l5 5 5-5M5 21h14",
   stats: "M3 3v18h18M7 15l4-4 3 3 5-6",
   sparkle: "M12 3l2 4 4 2-4 2-2 4-2-4-4-2 4-2z",
-  check: "M9 11l3 3 8-8M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9"
+  check: "M9 11l3 3 8-8M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9",
+  menu: "M4 7h16M4 12h16M4 17h16",
+  close: "M6 6l12 12M18 6L6 18",
+  compass: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM15 9l-2 6-6 2 2-6 6-2z",
+  book: "M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5v-16zM20 18H6.5A2.5 2.5 0 0 0 4 20.5"
 };
 function Icon(_ref7) {
   let name = _ref7.name,
@@ -1565,70 +1729,23 @@ function Icon(_ref7) {
     d: d
   }));
 }
-function BottomNav(_ref8) {
+function TopMenu(_ref8) {
   let s = _ref8.s,
     tab = _ref8.tab,
     setTab = _ref8.setTab,
-    onMore = _ref8.onMore;
-  const items = [{
-    key: "dashboard",
-    icon: "chart",
-    label: s.tabs.dashboard
-  }, {
-    key: "trades",
-    icon: "list",
-    label: s.tabs.trades
-  }, {
-    key: "newTrade",
-    icon: "plus",
-    label: s.tabs.newTrade,
-    fab: true
-  }, {
-    key: "psychology",
-    icon: "brain",
-    label: s.tabs.psychology
-  }, {
-    key: "__more",
-    icon: "dots",
-    label: s.nav.more
-  }];
-  return React.createElement("nav", {
-    className: "vtx-tabbar"
-  }, items.map(it => {
-    const active = it.key === tab;
-    const onClick = () => it.key === "__more" ? onMore() : setTab(it.key);
-    if (it.fab) {
-      return React.createElement("button", {
-        key: it.key,
-        className: "vtx-tab vtx-tab-fabwrap",
-        onClick: onClick,
-        "aria-label": it.label
-      }, React.createElement("span", {
-        className: "vtx-fab"
-      }, React.createElement(Icon, {
-        name: it.icon,
-        size: 24,
-        strokeWidth: 2.4
-      })), React.createElement("span", {
-        className: "vtx-fablabel"
-      }, it.label));
-    }
-    return React.createElement("button", {
-      key: it.key,
-      className: `vtx-tab ${active ? "on" : ""}`,
-      onClick: onClick,
-      "aria-label": it.label
-    }, React.createElement(Icon, {
-      name: it.icon
-    }), React.createElement("span", null, it.label));
-  }));
-}
-function MoreSheet(_ref9) {
-  let s = _ref9.s,
-    tab = _ref9.tab,
-    setTab = _ref9.setTab,
-    onClose = _ref9.onClose;
+    onClose = _ref8.onClose;
   const groups = [{
+    title: s.nav.gQuick,
+    items: [{
+      key: "dashboard",
+      icon: "chart",
+      label: s.tabs.dashboard
+    }, {
+      key: "analytics",
+      icon: "stats",
+      label: s.tabs.analytics
+    }]
+  }, {
     title: s.nav.gTrading,
     items: [{
       key: "newTrade",
@@ -1644,17 +1761,14 @@ function MoreSheet(_ref9) {
       label: s.tabs.import
     }]
   }, {
-    title: s.nav.gAnalytics,
+    title: s.nav.gPerformance,
     items: [{
-      key: "dashboard",
-      icon: "chart",
-      label: s.tabs.dashboard
-    }]
-  }, {
-    title: s.nav.gMindset,
-    items: [{
+      key: "blueprint",
+      icon: "compass",
+      label: s.tabs.blueprint
+    }, {
       key: "psychology",
-      icon: "brain",
+      icon: "book",
       label: s.tabs.psychology
     }, {
       key: "coach",
@@ -1664,10 +1778,6 @@ function MoreSheet(_ref9) {
   }, {
     title: s.nav.gSystem,
     items: [{
-      key: "rules",
-      icon: "check",
-      label: s.tabs.rules
-    }, {
       key: "settings",
       icon: "gear",
       label: s.tabs.settings
@@ -1678,16 +1788,25 @@ function MoreSheet(_ref9) {
     onClose();
   };
   return React.createElement("div", {
-    className: "vtx-sheet-wrap",
+    className: "vtx-sheet-wrap vtx-sheet-wrap-top",
     onClick: onClose,
     role: "dialog",
     "aria-modal": "true"
   }, React.createElement("div", {
-    className: "vtx-sheet",
+    className: "vtx-sheet vtx-sheet-top",
     onClick: e => e.stopPropagation()
   }, React.createElement("div", {
-    className: "vtx-sheet-handle"
-  }), groups.map(g => React.createElement("div", {
+    className: "vtx-sheet-topbar"
+  }, React.createElement("span", {
+    className: "vtx-cardhead"
+  }, s.nav.more), React.createElement("button", {
+    className: "vtx-iconbtn",
+    onClick: onClose,
+    "aria-label": s.common.close
+  }, React.createElement(Icon, {
+    name: "close",
+    size: 18
+  }))), groups.map(g => React.createElement("div", {
     key: g.title
   }, React.createElement("div", {
     className: "vtx-grp"
@@ -1702,54 +1821,23 @@ function MoreSheet(_ref9) {
     size: 17
   }), React.createElement("span", null, it.label))))))));
 }
-function Dashboard(_ref0) {
-  let s = _ref0.s,
-    trades = _ref0.trades,
-    rules = _ref0.rules,
-    lang = _ref0.lang,
-    setTab = _ref0.setTab;
+function Dashboard(_ref9) {
+  let s = _ref9.s,
+    trades = _ref9.trades,
+    rules = _ref9.rules,
+    lang = _ref9.lang,
+    setTab = _ref9.setTab;
   const d = s.dash;
   const maxRisk = (rules.find(r => r.id === "maxRisk") || {}).value || 1;
-  const _useState31 = useState("30"),
-    _useState32 = _slicedToArray(_useState31, 2),
-    period = _useState32[0],
-    setPeriod = _useState32[1];
-  const _useState33 = useState(""),
+  const _useState33 = useState(null),
     _useState34 = _slicedToArray(_useState33, 2),
-    from = _useState34[0],
-    setFrom = _useState34[1];
-  const _useState35 = useState(""),
+    briefing = _useState34[0],
+    setBriefing = _useState34[1];
+  const _useState35 = useState(false),
     _useState36 = _slicedToArray(_useState35, 2),
-    to = _useState36[0],
-    setTo = _useState36[1];
-  const _useState37 = useState(null),
-    _useState38 = _slicedToArray(_useState37, 2),
-    briefing = _useState38[0],
-    setBriefing = _useState38[1];
-  const _useState39 = useState(false),
-    _useState40 = _slicedToArray(_useState39, 2),
-    briefLoading = _useState40[0],
-    setBriefLoading = _useState40[1];
-  const now = Date.now();
-  const inPeriod = t => {
-    const ts = new Date(t.date).getTime();
-    if (isNaN(ts)) return true;
-    if (period === "today") {
-      const n = new Date();
-      const dt = new Date(ts);
-      return dt.toDateString() === n.toDateString();
-    }
-    if (period === "all") return true;
-    if (period === "custom") {
-      const f = from ? new Date(from).getTime() : -Infinity;
-      const t2 = to ? new Date(to).getTime() + 86400000 : Infinity;
-      return ts >= f && ts <= t2;
-    }
-    const days = parseInt(period, 10) || 30;
-    return now - ts < days * 86400000;
-  };
-  const filtered = useMemo(() => trades.filter(inPeriod), [trades, period, from, to]);
-  const st = useMemo(() => buildStats(filtered, maxRisk), [filtered, maxRisk]);
+    briefLoading = _useState36[0],
+    setBriefLoading = _useState36[1];
+  const snap = useMemo(() => buildStats(trades, maxRisk), [trades, maxRisk]);
   const ruleVal = id => (rules.find(r => r.id === id) || {}).value;
   const closedSorted = [...trades].filter(t => t.status !== "open").sort((a, b) => new Date(b.date) - new Date(a.date));
   let streak = 0;
@@ -1789,8 +1877,6 @@ function Dashboard(_ref0) {
     setBriefLoading(false);
   }
   const money = v => (v >= 0 ? "+" : "") + (Math.round(v * 100) / 100).toLocaleString();
-  const pf = st.profitFactor === Infinity ? "∞" : st.profitFactor.toFixed(2);
-  const periods = [["today", d.pToday], ["7", d.p7], ["15", d.p15], ["30", d.p30], ["all", d.pAll], ["custom", d.pCustom]];
   return React.createElement("div", null, React.createElement("div", {
     className: "vtx-prep"
   }, React.createElement("div", {
@@ -1825,6 +1911,130 @@ function Dashboard(_ref0) {
       lineHeight: 1.55
     }
   }, briefing)), React.createElement("div", {
+    className: "vtx-grid vtx-grid-4"
+  }, React.createElement("div", {
+    className: "vtx-kpi"
+  }, React.createElement("div", {
+    className: "vtx-kpi-label"
+  }, d.netPnl), React.createElement("div", {
+    className: "vtx-kpi-value",
+    style: {
+      color: snap.totalPnl >= 0 ? T.gain : T.loss
+    }
+  }, money(snap.totalPnl))), React.createElement("div", {
+    className: "vtx-kpi"
+  }, React.createElement("div", {
+    className: "vtx-kpi-label"
+  }, d.winRate), React.createElement("div", {
+    className: "vtx-kpi-value",
+    style: {
+      color: T.brandGlow
+    }
+  }, snap.winRate, "%")), React.createElement("div", {
+    className: "vtx-kpi"
+  }, React.createElement("div", {
+    className: "vtx-kpi-label"
+  }, d.trades), React.createElement("div", {
+    className: "vtx-kpi-value"
+  }, snap.count, snap.openCount ? React.createElement("span", {
+    style: {
+      fontSize: 13,
+      color: T.brandDeep
+    }
+  }, " +", snap.openCount) : null)), React.createElement("div", {
+    className: "vtx-kpi"
+  }, React.createElement("div", {
+    className: "vtx-kpi-label"
+  }, d.overall), React.createElement("div", {
+    className: "vtx-kpi-value",
+    style: {
+      color: T.brandGlow
+    }
+  }, snap.overall))), React.createElement("div", {
+    className: "vtx-card",
+    style: {
+      marginTop: 16
+    }
+  }, React.createElement("div", {
+    className: "vtx-section-title"
+  }, d.overall), React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 20,
+      alignItems: "center",
+      flexWrap: "wrap"
+    }
+  }, React.createElement(DisciplineRing, {
+    score: snap.overall
+  }), React.createElement("div", {
+    style: {
+      flex: 1,
+      minWidth: 220
+    }
+  }, React.createElement(Bar, {
+    label: d.discipline,
+    val: snap.discipline
+  }), React.createElement(Bar, {
+    label: d.psychology,
+    val: snap.psychology
+  }), React.createElement(Bar, {
+    label: d.execution,
+    val: snap.execution
+  }), React.createElement(Bar, {
+    label: d.risk,
+    val: snap.risk
+  }))), React.createElement("button", {
+    className: "vtx-btn-ghost",
+    style: {
+      marginTop: 16,
+      width: "100%"
+    },
+    onClick: () => setTab("analytics")
+  }, d.goAnalytics, " \u2192")));
+}
+function AnalyticsTab(_ref0) {
+  let s = _ref0.s,
+    trades = _ref0.trades,
+    rules = _ref0.rules,
+    lang = _ref0.lang;
+  const d = s.dash;
+  const maxRisk = (rules.find(r => r.id === "maxRisk") || {}).value || 1;
+  const _useState37 = useState("30"),
+    _useState38 = _slicedToArray(_useState37, 2),
+    period = _useState38[0],
+    setPeriod = _useState38[1];
+  const _useState39 = useState(""),
+    _useState40 = _slicedToArray(_useState39, 2),
+    from = _useState40[0],
+    setFrom = _useState40[1];
+  const _useState41 = useState(""),
+    _useState42 = _slicedToArray(_useState41, 2),
+    to = _useState42[0],
+    setTo = _useState42[1];
+  const now = Date.now();
+  const inPeriod = t => {
+    const ts = new Date(t.date).getTime();
+    if (isNaN(ts)) return true;
+    if (period === "today") {
+      const n = new Date();
+      const dt = new Date(ts);
+      return dt.toDateString() === n.toDateString();
+    }
+    if (period === "all") return true;
+    if (period === "custom") {
+      const f = from ? new Date(from).getTime() : -Infinity;
+      const t2 = to ? new Date(to).getTime() + 86400000 : Infinity;
+      return ts >= f && ts <= t2;
+    }
+    const days = parseInt(period, 10) || 30;
+    return now - ts < days * 86400000;
+  };
+  const filtered = useMemo(() => trades.filter(inPeriod), [trades, period, from, to]);
+  const st = useMemo(() => buildStats(filtered, maxRisk), [filtered, maxRisk]);
+  const money = v => (v >= 0 ? "+" : "") + (Math.round(v * 100) / 100).toLocaleString();
+  const pf = st.profitFactor === Infinity ? "∞" : st.profitFactor.toFixed(2);
+  const periods = [["today", d.pToday], ["7", d.p7], ["15", d.p15], ["30", d.p30], ["all", d.pAll], ["custom", d.pCustom]];
+  return React.createElement("div", null, React.createElement("div", {
     className: "vtx-section-title"
   }, d.periodTitle), React.createElement("div", {
     className: "vtx-chips"
@@ -2138,7 +2348,7 @@ function NewTrade(_ref15) {
     addTrade = _ref15.addTrade,
     setTab = _ref15.setTab,
     customRules = _ref15.customRules;
-  const _useState41 = useState({
+  const _useState43 = useState({
       asset: "",
       direction: "long",
       session: "London",
@@ -2159,9 +2369,9 @@ function NewTrade(_ref15) {
       notes: "",
       isOpen: false
     }),
-    _useState42 = _slicedToArray(_useState41, 2),
-    form = _useState42[0],
-    setForm = _useState42[1];
+    _useState44 = _slicedToArray(_useState43, 2),
+    form = _useState44[0],
+    setForm = _useState44[1];
   const gate = evaluateGate(form);
   const upd = (k, v) => setForm(f => ({
     ...f,
@@ -2416,10 +2626,10 @@ function NewTrade(_ref15) {
 function AssetAutocomplete(_ref16) {
   let value = _ref16.value,
     onChange = _ref16.onChange;
-  const _useState43 = useState(false),
-    _useState44 = _slicedToArray(_useState43, 2),
-    open = _useState44[0],
-    setOpen = _useState44[1];
+  const _useState45 = useState(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    open = _useState46[0],
+    setOpen = _useState46[1];
   const matches = value ? ASSET_LIST.filter(a => a.toLowerCase().includes(value.toLowerCase())).slice(0, 8) : ASSET_LIST.slice(0, 8);
   return React.createElement("div", {
     style: {
@@ -2471,8 +2681,11 @@ function Checkbox(_ref17) {
   let label = _ref17.label,
     checked = _ref17.checked,
     onChange = _ref17.onChange;
-  return React.createElement("div", {
-    className: "vtx-checkbox-row"
+  return React.createElement("label", {
+    className: "vtx-checkbox-row",
+    style: {
+      cursor: "pointer"
+    }
   }, React.createElement("input", {
     type: "checkbox",
     checked: checked,
@@ -2480,7 +2693,8 @@ function Checkbox(_ref17) {
     style: {
       width: 18,
       height: 18,
-      accentColor: T.brandGlow
+      accentColor: T.brandGlow,
+      flex: "none"
     }
   }), React.createElement("span", {
     style: {
@@ -2496,17 +2710,17 @@ function TradesList(_ref18) {
     analyzingId = _ref18.analyzingId,
     closeTrade = _ref18.closeTrade,
     lang = _ref18.lang;
-  const _useState45 = useState(null),
-    _useState46 = _slicedToArray(_useState45, 2),
-    closingId = _useState46[0],
-    setClosingId = _useState46[1];
-  const _useState47 = useState({
+  const _useState47 = useState(null),
+    _useState48 = _slicedToArray(_useState47, 2),
+    closingId = _useState48[0],
+    setClosingId = _useState48[1];
+  const _useState49 = useState({
       exitPrice: "",
       pnl: ""
     }),
-    _useState48 = _slicedToArray(_useState47, 2),
-    closeForm = _useState48[0],
-    setCloseForm = _useState48[1];
+    _useState50 = _slicedToArray(_useState49, 2),
+    closeForm = _useState50[0],
+    setCloseForm = _useState50[1];
   if (!trades.length) return React.createElement("div", {
     className: "vtx-card",
     style: {
@@ -2681,10 +2895,10 @@ function RulesTab(_ref19) {
     ...r,
     ...patch
   } : r));
-  const _useState49 = useState(""),
-    _useState50 = _slicedToArray(_useState49, 2),
-    newRuleText = _useState50[0],
-    setNewRuleText = _useState50[1];
+  const _useState51 = useState(""),
+    _useState52 = _slicedToArray(_useState51, 2),
+    newRuleText = _useState52[0],
+    setNewRuleText = _useState52[1];
   const ROWS = [{
     id: "maxTrades",
     label: s.rules.maxTrades,
@@ -3048,10 +3262,504 @@ function ImportTab(_ref23) {
     onClick: addAll
   }, s.importT.addAll)));
 }
-function PsychologyTab(_ref24) {
+function TradingBlueprintTab(_ref24) {
   let s = _ref24.s,
-    psyData = _ref24.psyData,
-    setPsyData = _ref24.setPsyData;
+    lang = _ref24.lang,
+    blueprint = _ref24.blueprint,
+    setBlueprint = _ref24.setBlueprint,
+    rules = _ref24.rules,
+    setRules = _ref24.setRules,
+    accountBalance = _ref24.accountBalance,
+    setAccountBalance = _ref24.setAccountBalance,
+    customRules = _ref24.customRules,
+    setCustomRules = _ref24.setCustomRules,
+    setTab = _ref24.setTab;
+  const t = s.bp;
+  const _useState53 = useState("identity"),
+    _useState54 = _slicedToArray(_useState53, 2),
+    chapter = _useState54[0],
+    setChapter = _useState54[1];
+  const _useState55 = useState(""),
+    _useState56 = _slicedToArray(_useState55, 2),
+    newCritical = _useState56[0],
+    setNewCritical = _useState56[1];
+  const EXP = BP_EXPERIENCE[lang];
+  const SIZING = BP_SIZING[lang];
+  const TONES = BP_AI_TONES[lang];
+  const PRINCIPLES = BP_PRINCIPLES[lang];
+  const CRIT = BP_CRITICAL_RULES[lang];
+  const get = function (section, key) {
+    let def = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+    return blueprint && blueprint[section] && blueprint[section][key] !== undefined ? blueprint[section][key] : def;
+  };
+  const set = (section, key, val) => setBlueprint(prev => ({
+    ...prev,
+    [section]: {
+      ...(prev[section] || {}),
+      [key]: val
+    }
+  }));
+  const getSet = (section, key) => get(section, key, {});
+  const toggleSet = (section, key, item) => {
+    const cur = getSet(section, key);
+    set(section, key, {
+      ...cur,
+      [item]: !cur[item]
+    });
+  };
+  const critical = blueprint.critical || {
+    presets: {},
+    custom: []
+  };
+  const toggleCritPreset = label => setBlueprint(prev => {
+    const c = prev.critical || {
+      presets: {},
+      custom: []
+    };
+    return {
+      ...prev,
+      critical: {
+        ...c,
+        presets: {
+          ...c.presets,
+          [label]: !c.presets[label]
+        }
+      }
+    };
+  });
+  const addCritCustom = () => {
+    if (!newCritical.trim()) return;
+    setBlueprint(prev => {
+      const c = prev.critical || {
+        presets: {},
+        custom: []
+      };
+      return {
+        ...prev,
+        critical: {
+          ...c,
+          custom: [...(c.custom || []), newCritical.trim()]
+        }
+      };
+    });
+    setNewCritical("");
+  };
+  const removeCritCustom = i => setBlueprint(prev => {
+    const c = prev.critical || {
+      presets: {},
+      custom: []
+    };
+    return {
+      ...prev,
+      critical: {
+        ...c,
+        custom: c.custom.filter((_, idx) => idx !== i)
+      }
+    };
+  });
+  const Field = _ref25 => {
+    let section = _ref25.section,
+      k = _ref25.k,
+      label = _ref25.label,
+      rows = _ref25.rows;
+    return React.createElement("div", {
+      className: "vtx-field"
+    }, React.createElement("label", {
+      className: "vtx-label"
+    }, label), rows ? React.createElement("textarea", {
+      className: "vtx-textarea",
+      rows: rows,
+      value: get(section, k),
+      onChange: e => set(section, k, e.target.value),
+      placeholder: t.placeholder
+    }) : React.createElement("input", {
+      className: "vtx-input",
+      value: get(section, k),
+      onChange: e => set(section, k, e.target.value),
+      placeholder: t.placeholder
+    }));
+  };
+  const NumField = _ref26 => {
+    let section = _ref26.section,
+      k = _ref26.k,
+      label = _ref26.label;
+    return React.createElement("div", {
+      className: "vtx-field"
+    }, React.createElement("label", {
+      className: "vtx-label"
+    }, label), React.createElement("input", {
+      className: "vtx-input vtx-mono",
+      type: "number",
+      value: get(section, k),
+      onChange: e => set(section, k, e.target.value),
+      placeholder: "0"
+    }));
+  };
+  const ChipGroup = _ref27 => {
+    let section = _ref27.section,
+      k = _ref27.k,
+      options = _ref27.options,
+      label = _ref27.label;
+    const cur = getSet(section, k);
+    return React.createElement("div", {
+      className: "vtx-field"
+    }, React.createElement("label", {
+      className: "vtx-label"
+    }, label), React.createElement("div", {
+      className: "vtx-chips",
+      style: {
+        marginBottom: 0
+      }
+    }, options.map(o => React.createElement("button", {
+      key: o,
+      type: "button",
+      className: "vtx-chip" + (cur[o] ? " active" : ""),
+      onClick: () => toggleSet(section, k, o)
+    }, o))));
+  };
+  const RadioRow = _ref28 => {
+    let section = _ref28.section,
+      k = _ref28.k,
+      options = _ref28.options,
+      label = _ref28.label;
+    return React.createElement("div", {
+      className: "vtx-field"
+    }, React.createElement("label", {
+      className: "vtx-label"
+    }, label), React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 8,
+        flexWrap: "wrap"
+      }
+    }, options.map(o => React.createElement("button", {
+      key: o,
+      type: "button",
+      className: get(section, k) === o ? "vtx-btn" : "vtx-btn-ghost",
+      style: {
+        padding: "7px 16px"
+      },
+      onClick: () => set(section, k, o)
+    }, o))));
+  };
+  const CHAPTERS = [["identity", "👤", t.chapters.identity], ["strategy", "📈", t.chapters.strategy], ["risk", "🛡", t.chapters.risk], ["psychology", "🧠", t.chapters.psychology], ["routine", "📅", t.chapters.routine], ["ai", "🤖", t.chapters.ai], ["notes", "📝", t.chapters.notes]];
+  return React.createElement("div", null, React.createElement("div", {
+    className: "vtx-section-title"
+  }, t.title), React.createElement("div", {
+    style: {
+      color: T.textMuted,
+      fontSize: 13,
+      marginBottom: 18
+    }
+  }, t.subtitle), React.createElement("div", {
+    className: "vtx-chips"
+  }, CHAPTERS.map(_ref29 => {
+    let _ref30 = _slicedToArray(_ref29, 3),
+      key = _ref30[0],
+      icon = _ref30[1],
+      label = _ref30[2];
+    return React.createElement("button", {
+      key: key,
+      className: "vtx-chip" + (chapter === key ? " active" : ""),
+      onClick: () => setChapter(key)
+    }, icon, " ", label);
+  })), chapter === "identity" && React.createElement("div", {
+    className: "vtx-card"
+  }, React.createElement(Field, {
+    section: "identity",
+    k: "mission",
+    label: t.idMission,
+    rows: 3
+  }), React.createElement("div", {
+    className: "vtx-grid vtx-grid-2"
+  }, React.createElement(Field, {
+    section: "identity",
+    k: "long",
+    label: t.idLong,
+    rows: 2
+  }), React.createElement(Field, {
+    section: "identity",
+    k: "short",
+    label: t.idShort,
+    rows: 2
+  })), React.createElement(RadioRow, {
+    section: "identity",
+    k: "experience",
+    options: EXP,
+    label: t.idExperience
+  }), React.createElement(ChipGroup, {
+    section: "identity",
+    k: "markets",
+    options: BP_MARKETS,
+    label: t.idMarkets
+  }), React.createElement(ChipGroup, {
+    section: "identity",
+    k: "style",
+    options: BP_STYLES,
+    label: t.idStyle
+  }), React.createElement(ChipGroup, {
+    section: "identity",
+    k: "timeframes",
+    options: BP_TIMEFRAMES,
+    label: t.idTimeframes
+  }), React.createElement("div", {
+    className: "vtx-divider"
+  }), React.createElement("div", {
+    className: "vtx-label",
+    style: {
+      marginBottom: 10
+    }
+  }, t.idPrinciplesTitle), PRINCIPLES.map(p => React.createElement(Checkbox, {
+    key: p,
+    label: p,
+    checked: !!getSet("identity", "principles")[p],
+    onChange: () => toggleSet("identity", "principles", p)
+  })), React.createElement("div", {
+    style: {
+      marginTop: 14
+    }
+  }, React.createElement(Field, {
+    section: "identity",
+    k: "personalRules",
+    label: t.idPersonalRules,
+    rows: 3
+  }))), chapter === "strategy" && React.createElement("div", {
+    className: "vtx-card"
+  }, React.createElement(Field, {
+    section: "strategy",
+    k: "name",
+    label: t.stName
+  }), React.createElement(Field, {
+    section: "strategy",
+    k: "desc",
+    label: t.stDesc,
+    rows: 2
+  }), React.createElement("div", {
+    className: "vtx-field"
+  }, React.createElement("label", {
+    className: "vtx-label"
+  }, t.stSetupType), React.createElement("select", {
+    className: "vtx-select",
+    value: get("strategy", "setupType"),
+    onChange: e => set("strategy", "setupType", e.target.value)
+  }, React.createElement("option", {
+    value: ""
+  }, "\u2014"), BP_SETUP_TYPES.map(o => React.createElement("option", {
+    key: o,
+    value: o
+  }, o)))), React.createElement(ChipGroup, {
+    section: "strategy",
+    k: "confirmations",
+    options: BP_CONFIRMATIONS,
+    label: t.stConfirmations
+  }), React.createElement("div", {
+    style: {
+      marginTop: 14
+    }
+  }, React.createElement(Field, {
+    section: "strategy",
+    k: "entry",
+    label: t.stEntry,
+    rows: 3
+  }), React.createElement(Field, {
+    section: "strategy",
+    k: "exit",
+    label: t.stExit,
+    rows: 3
+  }), React.createElement(Field, {
+    section: "strategy",
+    k: "avoid",
+    label: t.stAvoid,
+    rows: 3
+  }))), chapter === "risk" && React.createElement(React.Fragment, null, React.createElement("div", {
+    className: "vtx-card",
+    style: {
+      marginBottom: 16
+    }
+  }, React.createElement("div", {
+    className: "vtx-cardhead",
+    style: {
+      marginBottom: 12
+    }
+  }, t.riskExtraTitle), React.createElement("div", {
+    className: "vtx-grid vtx-grid-2"
+  }, React.createElement(NumField, {
+    section: "risk",
+    k: "weekly",
+    label: t.riskWeekly
+  }), React.createElement(NumField, {
+    section: "risk",
+    k: "monthly",
+    label: t.riskMonthly
+  }), React.createElement(NumField, {
+    section: "risk",
+    k: "drawdown",
+    label: t.riskDrawdown
+  }), React.createElement(NumField, {
+    section: "risk",
+    k: "leverage",
+    label: t.riskLeverage
+  })), React.createElement("div", {
+    className: "vtx-field",
+    style: {
+      maxWidth: 260
+    }
+  }, React.createElement("label", {
+    className: "vtx-label"
+  }, t.riskSizing), React.createElement("select", {
+    className: "vtx-select",
+    value: get("risk", "sizing"),
+    onChange: e => set("risk", "sizing", e.target.value)
+  }, React.createElement("option", {
+    value: ""
+  }, "\u2014"), SIZING.map(o => React.createElement("option", {
+    key: o,
+    value: o
+  }, o))))), React.createElement("div", {
+    className: "vtx-card",
+    style: {
+      marginBottom: 16
+    }
+  }, React.createElement("div", {
+    className: "vtx-cardhead"
+  }, "\uD83D\uDD12 ", t.criticalTitle), React.createElement("div", {
+    style: {
+      color: T.textMuted,
+      fontSize: 13,
+      margin: "6px 0 12px"
+    }
+  }, t.criticalSub), CRIT.map(c => React.createElement(Checkbox, {
+    key: c,
+    label: c,
+    checked: !!critical.presets[c],
+    onChange: () => toggleCritPreset(c)
+  })), (critical.custom || []).map((c, i) => React.createElement("div", {
+    key: i,
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "8px 0",
+      borderBottom: `1px solid ${T.borderSoft}`
+    }
+  }, React.createElement("span", {
+    style: {
+      fontSize: 14
+    }
+  }, "\uD83D\uDD12 ", c), React.createElement("button", {
+    className: "vtx-btn-danger",
+    onClick: () => removeCritCustom(i)
+  }, s.trades.delete))), React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8,
+      marginTop: 12
+    }
+  }, React.createElement("input", {
+    className: "vtx-input",
+    value: newCritical,
+    onChange: e => setNewCritical(e.target.value),
+    placeholder: t.addPlaceholder,
+    onKeyDown: e => e.key === "Enter" && addCritCustom()
+  }), React.createElement("button", {
+    className: "vtx-btn",
+    onClick: addCritCustom
+  }, t.add))), React.createElement(RulesTab, {
+    s: s,
+    rules: rules,
+    setRules: setRules,
+    accountBalance: accountBalance,
+    setAccountBalance: setAccountBalance,
+    customRules: customRules,
+    setCustomRules: setCustomRules,
+    lang: lang
+  })), chapter === "psychology" && React.createElement("div", {
+    className: "vtx-card"
+  }, React.createElement(Field, {
+    section: "psychology",
+    k: "fomo",
+    label: t.psyFomo,
+    rows: 2
+  }), React.createElement(Field, {
+    section: "psychology",
+    k: "revenge",
+    label: t.psyRevenge,
+    rows: 2
+  }), React.createElement(Field, {
+    section: "psychology",
+    k: "loss3",
+    label: t.psy3Loss,
+    rows: 2
+  }), React.createElement(Field, {
+    section: "psychology",
+    k: "win3",
+    label: t.psy3Win,
+    rows: 2
+  }), React.createElement(Field, {
+    section: "psychology",
+    k: "stop",
+    label: t.psyStop,
+    rows: 2
+  }), React.createElement(Field, {
+    section: "psychology",
+    k: "recover",
+    label: t.psyRecover,
+    rows: 2
+  })), chapter === "routine" && React.createElement("div", {
+    className: "vtx-card"
+  }, React.createElement(Field, {
+    section: "routine",
+    k: "morning",
+    label: t.routineMorning,
+    rows: 3
+  }), React.createElement(Field, {
+    section: "routine",
+    k: "evening",
+    label: t.routineEvening,
+    rows: 3
+  }), React.createElement(Field, {
+    section: "routine",
+    k: "weekend",
+    label: t.routineWeekend,
+    rows: 3
+  }), React.createElement("div", {
+    className: "vtx-divider"
+  }), React.createElement("div", {
+    style: {
+      color: T.textMuted,
+      fontSize: 13,
+      marginBottom: 10
+    }
+  }, t.routineNote), React.createElement("button", {
+    className: "vtx-btn-ghost",
+    onClick: () => setTab("psychology")
+  }, t.routineLink, " \u2192")), chapter === "ai" && React.createElement("div", {
+    className: "vtx-card"
+  }, React.createElement(RadioRow, {
+    section: "ai",
+    k: "tone",
+    options: TONES,
+    label: t.aiToneTitle
+  })), chapter === "notes" && React.createElement("div", {
+    className: "vtx-card"
+  }, React.createElement(Field, {
+    section: "notes",
+    k: "text",
+    label: t.notesLabel,
+    rows: 10
+  })), React.createElement("div", {
+    style: {
+      color: T.textFaint,
+      fontSize: 12,
+      textAlign: "center",
+      padding: "20px 0"
+    }
+  }, t.saved));
+}
+function PsychologyTab(_ref31) {
+  let s = _ref31.s,
+    psyData = _ref31.psyData,
+    setPsyData = _ref31.setPsyData;
   const p = s.psy;
   const set = (section, key, val) => setPsyData(prev => ({
     ...prev,
@@ -3064,11 +3772,11 @@ function PsychologyTab(_ref24) {
     let def = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
     return psyData && psyData[section] && psyData[section][key] !== undefined ? psyData[section][key] : def;
   };
-  const Area = _ref25 => {
-    let section = _ref25.section,
-      k = _ref25.k,
-      _ref25$rows = _ref25.rows,
-      rows = _ref25$rows === void 0 ? 2 : _ref25$rows;
+  const Area = _ref32 => {
+    let section = _ref32.section,
+      k = _ref32.k,
+      _ref32$rows = _ref32.rows,
+      rows = _ref32$rows === void 0 ? 2 : _ref32$rows;
     return React.createElement("textarea", {
       className: "vtx-textarea",
       rows: rows,
@@ -3080,8 +3788,8 @@ function PsychologyTab(_ref24) {
       }
     });
   };
-  const Q = _ref26 => {
-    let children = _ref26.children;
+  const Q = _ref33 => {
+    let children = _ref33.children;
     return React.createElement("div", {
       className: "vtx-label",
       style: {
@@ -3089,9 +3797,9 @@ function PsychologyTab(_ref24) {
       }
     }, children);
   };
-  const YesNo = _ref27 => {
-    let section = _ref27.section,
-      k = _ref27.k;
+  const YesNo = _ref34 => {
+    let section = _ref34.section,
+      k = _ref34.k;
     const v = get(section, k);
     return React.createElement("div", {
       style: {
@@ -3099,10 +3807,10 @@ function PsychologyTab(_ref24) {
         gap: 8,
         marginTop: 6
       }
-    }, [["yes", s.common.yes], ["no", s.common.no]].map(_ref28 => {
-      let _ref29 = _slicedToArray(_ref28, 2),
-        val = _ref29[0],
-        label = _ref29[1];
+    }, [["yes", s.common.yes], ["no", s.common.no]].map(_ref35 => {
+      let _ref36 = _slicedToArray(_ref35, 2),
+        val = _ref36[0],
+        label = _ref36[1];
       return React.createElement("button", {
         key: val,
         className: v === val ? "vtx-btn" : "vtx-btn-ghost",
@@ -3137,10 +3845,10 @@ function PsychologyTab(_ref24) {
       fontSize: 12,
       marginBottom: 10
     }
-  }, p.preSub), [["1", p.pre1], ["2", p.pre2], ["3", p.pre3], ["4", p.pre4], ["5", p.pre5], ["6", p.pre6]].map(_ref30 => {
-    let _ref31 = _slicedToArray(_ref30, 2),
-      k = _ref31[0],
-      label = _ref31[1];
+  }, p.preSub), [["1", p.pre1], ["2", p.pre2], ["3", p.pre3], ["4", p.pre4], ["5", p.pre5], ["6", p.pre6]].map(_ref37 => {
+    let _ref38 = _slicedToArray(_ref37, 2),
+      k = _ref38[0],
+      label = _ref38[1];
     return React.createElement(Checkbox, {
       key: k,
       label: label,
@@ -3192,10 +3900,10 @@ function PsychologyTab(_ref24) {
       color: T.textFaint,
       fontSize: 12
     }
-  }, p.weekSub), [["1", p.w1], ["2", p.w2], ["3", p.w3], ["4", p.w4], ["5", p.w5], ["6", p.w6], ["7", p.w7], ["8", p.w8], ["9", p.w9], ["10", p.w10]].map(_ref32 => {
-    let _ref33 = _slicedToArray(_ref32, 2),
-      k = _ref33[0],
-      label = _ref33[1];
+  }, p.weekSub), [["1", p.w1], ["2", p.w2], ["3", p.w3], ["4", p.w4], ["5", p.w5], ["6", p.w6], ["7", p.w7], ["8", p.w8], ["9", p.w9], ["10", p.w10]].map(_ref39 => {
+    let _ref40 = _slicedToArray(_ref39, 2),
+      k = _ref40[0],
+      label = _ref40[1];
     return React.createElement("div", {
       key: k
     }, React.createElement(Q, null, k, ". ", label), React.createElement(Area, {
@@ -3245,29 +3953,29 @@ function PsychologyTab(_ref24) {
     }
   }, p.saved));
 }
-function SettingsTab(_ref34) {
-  let s = _ref34.s;
+function SettingsTab(_ref41) {
+  let s = _ref41.s;
   const t = s.settings;
-  const _useState51 = useState(getApiKey()),
-    _useState52 = _slicedToArray(_useState51, 2),
-    key = _useState52[0],
-    setKey = _useState52[1];
-  const _useState53 = useState(getApiModel()),
-    _useState54 = _slicedToArray(_useState53, 2),
-    model = _useState54[0],
-    setModel = _useState54[1];
-  const _useState55 = useState(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    show = _useState56[0],
-    setShow = _useState56[1];
-  const _useState57 = useState(false),
+  const _useState57 = useState(getApiKey()),
     _useState58 = _slicedToArray(_useState57, 2),
-    savedFlag = _useState58[0],
-    setSavedFlag = _useState58[1];
-  const _useState59 = useState(null),
+    key = _useState58[0],
+    setKey = _useState58[1];
+  const _useState59 = useState(getApiModel()),
     _useState60 = _slicedToArray(_useState59, 2),
-    testState = _useState60[0],
-    setTestState = _useState60[1];
+    model = _useState60[0],
+    setModel = _useState60[1];
+  const _useState61 = useState(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    show = _useState62[0],
+    setShow = _useState62[1];
+  const _useState63 = useState(false),
+    _useState64 = _slicedToArray(_useState63, 2),
+    savedFlag = _useState64[0],
+    setSavedFlag = _useState64[1];
+  const _useState65 = useState(null),
+    _useState66 = _slicedToArray(_useState65, 2),
+    testState = _useState66[0],
+    setTestState = _useState66[1];
   const MODELS = [{
     id: "claude-sonnet-5",
     label: "Sonnet 5 — ισορροπία (προτεινόμενο)"

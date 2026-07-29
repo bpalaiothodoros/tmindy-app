@@ -40,7 +40,7 @@ const STR = {
   el: {
     appName: "Tmindy",
     tagline: "Behavioral Trading Journal",
-    tabs: { dashboard: "Πίνακας", newTrade: "Νέο Trade", trades: "Trades", psychology: "Ψυχολογία", rules: "Κανόνες", coach: "AI Coach", import: "Import", settings: "Ρυθμίσεις" },
+    tabs: { dashboard: "Πίνακας", newTrade: "Νέο Trade", trades: "Trades", analytics: "Στατιστικά", blueprint: "Trading Blueprint", psychology: "Ημερολόγιο", rules: "Κανόνες", coach: "AI Coach", import: "Import", settings: "Ρυθμίσεις" },
     dash: {
       pnl: "Συνολικό P&L", winRate: "Win Rate", trades: "Trades", expectancy: "Expectancy",
       disciplineRing: "Discipline Ring", noTrades: "Δεν υπάρχουν ακόμα trades. Πρόσθεσε το πρώτο σου.",
@@ -57,7 +57,7 @@ const STR = {
       bestSession: "Καλύτερο session", worstSession: "Χειρότερο session",
       noPeriodTrades: "Δεν υπάρχουν trades σε αυτή την περίοδο.",
       prepTitle: "Προετοιμασία πριν το trading", prepStart: "Pre-Market Check",
-      prepAsk: "AI Briefing", prepThinking: "Ετοιμάζω briefing...",
+      prepAsk: "AI Briefing", prepThinking: "Ετοιμάζω briefing...", goAnalytics: "Αναλυτικά Στατιστικά",
     },
     form: {
       title: "Καταγραφή νέου trade", asset: "Asset", direction: "Κατεύθυνση", long: "Long", short: "Short",
@@ -128,6 +128,27 @@ const STR = {
       bAction: "Μία μικρή πράξη μέσα στις επόμενες 24 ώρες για να τη ζήσω:",
       placeholder: "Γράψε εδώ...",
     },
+    bp: {
+      title: "Trading Blueprint", subtitle: "Το προσωπικό σου σχέδιο trading — ταυτότητα, στρατηγική, ρίσκο, ψυχολογία, ρουτίνα, κανόνες. Πάνω σε αυτό βασίζονται όλες οι αναλύσεις του AI Coach.",
+      save: "Αποθήκευση", saved: "Αποθηκεύτηκε ✓",
+      chapters: { identity: "Ταυτότητα", strategy: "Στρατηγική", risk: "Ρίσκο & Κανόνες", psychology: "Ψυχολογία", routine: "Ρουτίνα", ai: "AI Coach", notes: "Σημειώσεις" },
+      idMission: "Trading Mission — ποιος trader θέλω να γίνω;",
+      idLong: "Μακροπρόθεσμος στόχος", idShort: "Βραχυπρόθεσμος στόχος",
+      idPrinciplesTitle: "Οι βασικές μου αρχές", idPersonalRules: "Προσωπικοί κανόνες",
+      idExperience: "Εμπειρία", idMarkets: "Αγορές", idStyle: "Style", idTimeframes: "Αγαπημένα Timeframes",
+      stName: "Όνομα στρατηγικής", stDesc: "Περιγραφή", stSetupType: "Τύπος Setup",
+      stConfirmations: "Απαραίτητες επιβεβαιώσεις", stEntry: "Κανόνες εισόδου", stExit: "Κανόνες εξόδου", stAvoid: "Πότε ΔΕΝ κάνω trade",
+      riskExtraTitle: "Επιπλέον όρια ρίσκου", riskWeekly: "Max Weekly Loss (%)", riskMonthly: "Max Monthly Loss (%)",
+      riskDrawdown: "Max Drawdown (%)", riskLeverage: "Leverage", riskSizing: "Position Sizing",
+      criticalTitle: "Απαραβίαστοι Κανόνες", criticalSub: "Δέσμευση προς τον εαυτό σου — τσέκαρε ό,τι υπόσχεσαι να τηρείς πάντα.",
+      addCustom: "Προσθήκη δικού σου κανόνα", addPlaceholder: "π.χ. Δεν κάνω trade Παρασκευή απόγευμα", add: "Προσθήκη",
+      psyFomo: "Αν νιώσω FOMO...", psyRevenge: "Αν νιώσω revenge...", psy3Loss: "Μετά από 3 χαμένα trades...",
+      psy3Win: "Μετά από 3 κερδισμένα trades...", psyStop: "Πότε σταματώ εντελώς το trading;", psyRecover: "Πώς επανέρχομαι ψυχολογικά;",
+      routineMorning: "Πρωινή ρουτίνα", routineEvening: "Βραδινή ρουτίνα", routineWeekend: "Εβδομαδιαία ανασκόπηση",
+      routineNote: "Το λεπτομερές Pre-Market Check & Post-Market Review γίνεται στο Ημερολόγιο.", routineLink: "Άνοιγμα Ημερολογίου",
+      aiToneTitle: "Πώς θέλω να μου μιλάει το AI Coach", notesLabel: "Ελεύθερες σημειώσεις — παρατηρήσεις, ιδέες, μαθήματα, νέα setups",
+      placeholder: "Γράψε εδώ...",
+    },
     settings: {
       title: "Ρυθμίσεις",
       aiTitle: "AI Coach — API Key",
@@ -139,13 +160,13 @@ const STR = {
       clearData: "Διαγραφή όλων των δεδομένων", clearConfirm: "Σίγουρα; Θα διαγραφούν όλα τα trades, κανόνες και ρουτίνες. Δεν αναιρείται.",
       keyMissing: "Δεν έχει οριστεί API key ακόμα.",
     },
-    nav: { more: "Περισσότερα", gTrading: "TRADING", gAnalytics: "ANALYTICS", gMindset: "MINDSET", gSystem: "ΣΥΣΤΗΜΑ" },
+    nav: { more: "Μενού", gQuick: "ΓΡΗΓΟΡΗ ΠΡΟΣΒΑΣΗ", gTrading: "TRADING", gPerformance: "ΑΠΟΔΟΣΗ", gSystem: "ΣΥΣΤΗΜΑ" },
     common: { close: "Κλείσιμο", yes: "Ναι", no: "Όχι", loading: "Φόρτωση..." },
   },
   en: {
     appName: "Tmindy",
     tagline: "Behavioral Trading Journal",
-    tabs: { dashboard: "Dashboard", newTrade: "New Trade", trades: "Trades", psychology: "Psychology", rules: "Rules", coach: "AI Coach", import: "Import", settings: "Settings" },
+    tabs: { dashboard: "Dashboard", newTrade: "New Trade", trades: "Trades", analytics: "Analytics", blueprint: "Trading Blueprint", psychology: "Journal", rules: "Rules", coach: "AI Coach", import: "Import", settings: "Settings" },
     dash: {
       pnl: "Total P&L", winRate: "Win Rate", trades: "Trades", expectancy: "Expectancy",
       disciplineRing: "Discipline Ring", noTrades: "No trades yet. Add your first one.",
@@ -162,7 +183,7 @@ const STR = {
       bestSession: "Best session", worstSession: "Worst session",
       noPeriodTrades: "No trades in this period.",
       prepTitle: "Prepare before trading", prepStart: "Pre-Market Check",
-      prepAsk: "AI Briefing", prepThinking: "Preparing briefing...",
+      prepAsk: "AI Briefing", prepThinking: "Preparing briefing...", goAnalytics: "View Full Analytics",
     },
     form: {
       title: "Log a new trade", asset: "Asset", direction: "Direction", long: "Long", short: "Short",
@@ -233,6 +254,27 @@ const STR = {
       bAction: "One small action within the next 24h to live it:",
       placeholder: "Write here...",
     },
+    bp: {
+      title: "Trading Blueprint", subtitle: "Your personal trading plan — identity, strategy, risk, psychology, routine, rules. Every AI Coach analysis is grounded in this.",
+      save: "Save", saved: "Saved ✓",
+      chapters: { identity: "Identity", strategy: "Strategy", risk: "Risk & Rules", psychology: "Psychology", routine: "Routine", ai: "AI Coach", notes: "Notes" },
+      idMission: "Trading Mission — who do I want to become as a trader?",
+      idLong: "Long-term goal", idShort: "Short-term goal",
+      idPrinciplesTitle: "My core principles", idPersonalRules: "Personal rules",
+      idExperience: "Experience", idMarkets: "Markets", idStyle: "Style", idTimeframes: "Favorite Timeframes",
+      stName: "Strategy name", stDesc: "Description", stSetupType: "Setup Type",
+      stConfirmations: "Required confirmations", stEntry: "Entry rules", stExit: "Exit rules", stAvoid: "When I do NOT trade",
+      riskExtraTitle: "Extra risk limits", riskWeekly: "Max Weekly Loss (%)", riskMonthly: "Max Monthly Loss (%)",
+      riskDrawdown: "Max Drawdown (%)", riskLeverage: "Leverage", riskSizing: "Position Sizing",
+      criticalTitle: "Non-Negotiable Rules", criticalSub: "A commitment to yourself — check what you promise to always keep.",
+      addCustom: "Add your own rule", addPlaceholder: "e.g. No trading Friday afternoon", add: "Add",
+      psyFomo: "If I feel FOMO...", psyRevenge: "If I feel revenge...", psy3Loss: "After 3 losing trades...",
+      psy3Win: "After 3 winning trades...", psyStop: "When do I stop trading completely?", psyRecover: "How do I recover psychologically?",
+      routineMorning: "Morning routine", routineEvening: "Evening routine", routineWeekend: "Weekly review",
+      routineNote: "The detailed Pre-Market Check & Post-Market Review live in the Journal.", routineLink: "Open Journal",
+      aiToneTitle: "How I want the AI Coach to talk to me", notesLabel: "Free notes — observations, ideas, lessons, new setups",
+      placeholder: "Write here...",
+    },
     settings: {
       title: "Settings",
       aiTitle: "AI Coach — API Key",
@@ -244,7 +286,7 @@ const STR = {
       clearData: "Delete all data", clearConfirm: "Are you sure? This erases all trades, rules and routines. Cannot be undone.",
       keyMissing: "No API key set yet.",
     },
-    nav: { more: "More", gTrading: "TRADING", gAnalytics: "ANALYTICS", gMindset: "MINDSET", gSystem: "SYSTEM" },
+    nav: { more: "Menu", gQuick: "QUICK ACCESS", gTrading: "TRADING", gPerformance: "PERFORMANCE", gSystem: "SYSTEM" },
     common: { close: "Close", yes: "Yes", no: "No", loading: "Loading..." },
   },
 };
@@ -278,6 +320,27 @@ const FEELINGS = {
   en: ["Calm", "Anxious", "Excited", "Fearful", "Confident", "Uncertain", "Tired"],
 };
 const FEELING_CALM_KEYS = ["Ήρεμος", "Σίγουρος", "Calm", "Confident"];
+
+/* ------------------------------------------------------------
+   TRADING BLUEPRINT — σταθερές επιλογών (checkboxes/dropdowns).
+   Οι περισσότερες είναι διεθνείς όροι trading, ίδιες σε ΕΛ/EN.
+   ------------------------------------------------------------ */
+const BP_MARKETS = ["Forex", "Crypto", "Stocks", "Futures", "Commodities", "Indices", "ETFs", "Options"];
+const BP_STYLES = ["Scalping", "Day Trading", "Swing Trading", "Position Trading"];
+const BP_TIMEFRAMES = ["M1", "M5", "M15", "M30", "H1", "H4", "Daily", "Weekly", "Monthly"];
+const BP_SETUP_TYPES = ["Trend Following", "Reversal", "Breakout", "Pullback", "Range", "Liquidity", "Smart Money", "ICT", "Wyckoff", "Custom"];
+const BP_CONFIRMATIONS = ["Market Structure", "BOS", "CHOCH", "Liquidity Sweep", "Order Block", "Fair Value Gap", "Fibonacci", "RSI", "MACD", "Divergence", "EMA", "SMA", "VWAP", "Volume", "ATR", "Multi-Timeframe Confirmation", "Economic News", "Open Interest", "Funding Rate"];
+const BP_EXPERIENCE = { el: ["Αρχάριος", "Μέτριος", "Προχωρημένος", "Επαγγελματίας"], en: ["Beginner", "Intermediate", "Advanced", "Professional"] };
+const BP_SIZING = { el: ["Σταθερό Lot", "Σταθερό %", "Kelly Criterion", "Άλλο"], en: ["Fixed Lot", "Fixed %", "Kelly Criterion", "Other"] };
+const BP_AI_TONES = { el: ["Φιλικός", "Επαγγελματικός", "Στρατιωτικός", "Μέντορας", "Ψυχολόγος"], en: ["Friendly", "Professional", "Military", "Mentor", "Psychologist"] };
+const BP_PRINCIPLES = {
+  el: ["Προστατεύω πάντα το κεφάλαιό μου", "Δεν κυνηγάω την αγορά", "Ακολουθώ το σχέδιό μου", "Δέχομαι το Stop Loss", "Δεν κάνω Revenge Trading", "Δεν κάνω FOMO Trades", "Trade μόνο σε A+ Setup", "Η σωστή εκτέλεση είναι σημαντικότερη από το αποτέλεσμα", "Ποιότητα και όχι ποσότητα", "Περιμένω πάντα επιβεβαίωση"],
+  en: ["I always protect my capital", "I don't chase the market", "I follow my plan", "I accept the Stop Loss", "I don't revenge trade", "I don't take FOMO trades", "I only trade A+ setups", "Correct execution matters more than the outcome", "Quality over quantity", "I always wait for confirmation"],
+};
+const BP_CRITICAL_RULES = {
+  el: ["Δεν μετακινώ ποτέ το Stop Loss", "Δεν κάνω trade από το κινητό", "Δεν αυξάνω ποτέ το risk", "Δεν κάνω revenge trading", "Δεν κάνω trade όταν είμαι κουρασμένος/η", "Δεν κάνω trade όταν είμαι θυμωμένος/η", "Δεν κάνω trade χωρίς ανάλυση", "Δεν ανοίγω πάνω από Χ θέσεις ταυτόχρονα"],
+  en: ["I never move my Stop Loss", "I don't trade from my phone", "I never increase risk", "I don't revenge trade", "I don't trade when tired", "I don't trade when angry", "I don't trade without analysis", "I don't open more than X positions at once"],
+};
 
 /* ------------------------------------------------------------
    STATS ENGINE — υπολογίζει βαθιά στατιστικά για ΟΠΟΙΟΔΗΠΟΤΕ
@@ -464,13 +527,13 @@ function GlobalStyle() {
 
       /* HEADER / BRAND */
       /* HEADER — το λογότυπο (ολόκληρη η εικόνα) κεντραρισμένο, controls πάνω δεξιά */
-      .vtx-header { position:relative; display:flex; align-items:center; justify-content:center;
-        padding: 54px 14px 14px; background: linear-gradient(180deg, #14110a, ${T.bg});
+      .vtx-header { position:relative; display:flex; align-items:center; justify-content:flex-start;
+        padding: 14px 14px 14px 18px; background: linear-gradient(180deg, #14110a, ${T.bg});
         box-shadow: 0 1px 0 ${T.brandLine}, 0 10px 30px -12px #000; }
-      .vtx-logo-full { width: min(300px, 74vw); height:auto; display:block;
+      .vtx-logo-full { width: min(210px, 52vw); height:auto; display:block;
         filter: drop-shadow(0 6px 22px ${T.brand}44); }
-      .vtx-header-ctl { position:absolute; top:12px; right:14px; display:flex; align-items:center; gap:8px; }
-      @media (max-width: 400px) { .vtx-logo-full { width: min(230px, 62vw); } }
+      .vtx-header-ctl { position:absolute; top:14px; right:14px; display:flex; align-items:center; gap:8px; }
+      @media (max-width: 400px) { .vtx-logo-full { width: min(170px, 46vw); } }
       .vtx-brand { display:flex; align-items:center; gap: 14px; }
       .vtx-logo-img { height: 46px; width:auto; display:block;
         filter: drop-shadow(0 4px 18px ${T.brand}55); }
@@ -478,32 +541,27 @@ function GlobalStyle() {
         background:${T.surfaceHi}; color:${T.brand}; display:flex; align-items:center; justify-content:center; cursor:pointer; }
       .vtx-iconbtn:hover { color:${T.brandGlow}; border-color:${T.brand}88; }
 
-      /* ΚΑΤΩ TAB BAR */
-      .vtx-tabbar { position:fixed; left:0; right:0; bottom:0; z-index:60;
-        display:flex; align-items:flex-end; justify-content:space-around;
-        padding:9px 6px calc(14px + env(safe-area-inset-bottom, 0px));
-        background:linear-gradient(180deg,#100d08,#0A0A0A); border-top:1px solid ${T.brandLine};
-        box-shadow:0 -10px 30px -12px #000; }
-      .vtx-tab { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
-        background:none; border:none; cursor:pointer; padding:2px 0;
-        font-family:${FONT_BODY}; font-size:10px; font-weight:700; color:#7d745c; }
-      .vtx-tab.on { color:${T.brandGlow}; }
-      .vtx-tab-fabwrap { flex:0 0 auto; }
-      .vtx-fab { width:52px; height:52px; border-radius:50%; margin-top:-24px;
+      /* ΠΛΩΤΟ ΚΟΥΜΠΙ «ΝΕΟ TRADE» */
+      .vtx-fabfloat { position:fixed; right:18px; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); z-index:55;
+        width:56px; height:56px; border-radius:50%; border:none; cursor:pointer;
         background:linear-gradient(135deg,${T.brandGlow},${T.brand}); color:#1a1405;
         display:flex; align-items:center; justify-content:center;
-        border:3px solid #0A0A0A; box-shadow:0 8px 22px ${T.brand}66; }
-      .vtx-fablabel { font-size:10px; font-weight:800; color:${T.brand}; margin-top:2px; }
+        box-shadow:0 10px 26px ${T.brand}66, 0 0 0 3px #0A0A0A; }
 
-      /* «ΠΕΡΙΣΣΟΤΕΡΑ» SHEET */
+      /* TOP MENU — ανοίγει από πάνω, ένα κουμπί (☰) με όλες τις επιλογές */
       .vtx-sheet-wrap { position:fixed; inset:0; z-index:70; background:rgba(0,0,0,.6);
-        display:flex; align-items:flex-end; animation:vtxfade .18s ease; }
+        display:flex; animation:vtxfade .18s ease; }
+      .vtx-sheet-wrap-top { align-items:flex-start; }
       @keyframes vtxfade { from { opacity:0 } to { opacity:1 } }
-      @keyframes vtxup { from { transform:translateY(14px) } to { transform:translateY(0) } }
+      @keyframes vtxdown { from { transform:translateY(-16px); opacity:.6 } to { transform:translateY(0); opacity:1 } }
       .vtx-sheet { width:100%; max-height:82vh; overflow-y:auto;
         background:linear-gradient(180deg,#181307,#100d08); border-top:1px solid ${T.brand}66;
         border-radius:22px 22px 0 0; padding:12px 16px calc(24px + env(safe-area-inset-bottom, 0px));
-        box-shadow:0 -20px 50px -10px #000; animation:vtxup .2s ease; }
+        box-shadow:0 -20px 50px -10px #000; }
+      .vtx-sheet-top { border-top:none; border-bottom:1px solid ${T.brand}66;
+        border-radius:0 0 22px 22px; padding:calc(14px + env(safe-area-inset-top, 0px)) 16px 24px;
+        box-shadow:0 24px 60px -16px #000; animation:vtxdown .2s ease; max-height:88vh; }
+      .vtx-sheet-topbar { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
       .vtx-sheet-handle { width:40px; height:4px; border-radius:4px; background:${T.brandLine}; margin:2px auto 14px; }
       .vtx-grp { font-size:10px; font-weight:800; color:${T.brandDeep}; letter-spacing:.16em;
         margin:16px 0 8px; display:flex; align-items:center; gap:8px; }
@@ -533,7 +591,7 @@ function GlobalStyle() {
         background: linear-gradient(135deg, ${T.brandGlow}, ${T.brand});
         border-color:${T.brandGlow}; box-shadow:0 4px 16px ${T.brand}44; }
 
-      .vtx-main { padding: 22px 18px calc(110px + env(safe-area-inset-bottom, 0px)); max-width: 1080px; margin: 0 auto; }
+      .vtx-main { padding: 22px 18px calc(90px + env(safe-area-inset-bottom, 0px)); max-width: 1080px; margin: 0 auto; }
 
       /* CARDS */
       .vtx-card { background: linear-gradient(180deg, ${T.cardTop}, ${T.cardBot});
@@ -739,6 +797,7 @@ function TradingJournalApp() {
   const [importLoading, setImportLoading] = useState(false);
   const [analyzingId, setAnalyzingId] = useState(null);
   const [psyData, setPsyData] = useState({});
+  const [blueprint, setBlueprint] = useState({});
   const [moreOpen, setMoreOpen] = useState(false);
 
   // Load persisted state
@@ -768,6 +827,10 @@ function TradingJournalApp() {
       try {
         const p = await storage.get("psyData");
         if (p && p.value) setPsyData(JSON.parse(p.value));
+      } catch (e) {}
+      try {
+        const bp = await storage.get("blueprint");
+        if (bp && bp.value) setBlueprint(JSON.parse(bp.value));
       } catch (e) {}
 
       // Εισαγωγή ιστορικού cTrader — γίνεται ΜΙΑ ΦΟΡΑ, ελέγχεται μέσω flag στο storage
@@ -804,6 +867,7 @@ function TradingJournalApp() {
   useEffect(() => { if (loaded) storage.set("customRules", JSON.stringify(customRules)).catch(() => {}); }, [customRules, loaded]);
   useEffect(() => { if (loaded) storage.set("lang", lang).catch(() => {}); }, [lang, loaded]);
   useEffect(() => { if (loaded) storage.set("psyData", JSON.stringify(psyData)).catch(() => {}); }, [psyData, loaded]);
+  useEffect(() => { if (loaded) storage.set("blueprint", JSON.stringify(blueprint)).catch(() => {}); }, [blueprint, loaded]);
 
   const ruleVal = (id) => rules.find((r) => r.id === id);
 
@@ -995,25 +1059,34 @@ Respond with ONLY a valid JSON array, no markdown, no preamble.`;
             <button className={`vtx-lang-btn ${lang === "el" ? "active" : ""}`} onClick={() => setLang("el")}>ΕΛ</button>
             <button className={`vtx-lang-btn ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")}>EN</button>
           </div>
-          <button className="vtx-iconbtn" aria-label={s.tabs.settings} onClick={() => setTab("settings")}>
-            <Icon name="gear" />
+          <button className="vtx-iconbtn" aria-label={s.nav.more} onClick={() => setMoreOpen(true)}>
+            <Icon name="menu" />
           </button>
         </div>
       </div>
 
       <div className="vtx-main">
         {tab === "dashboard" && <Dashboard s={s} trades={trades} rules={rules} lang={lang} setTab={setTab} />}
+        {tab === "analytics" && <AnalyticsTab s={s} trades={trades} rules={rules} lang={lang} />}
         {tab === "newTrade" && <NewTrade s={s} lang={lang} evaluateGate={evaluateGate} addTrade={addTrade} setTab={setTab} customRules={customRules} />}
         {tab === "trades" && <TradesList s={s} trades={trades} deleteTrade={deleteTrade} analyzeTrade={analyzeTrade} analyzingId={analyzingId} closeTrade={closeTrade} lang={lang} />}
-        {tab === "rules" && <RulesTab s={s} rules={rules} setRules={setRules} accountBalance={accountBalance} setAccountBalance={setAccountBalance} customRules={customRules} setCustomRules={setCustomRules} lang={lang} />}
+        {tab === "blueprint" && <TradingBlueprintTab s={s} lang={lang} blueprint={blueprint} setBlueprint={setBlueprint}
+           rules={rules} setRules={setRules} accountBalance={accountBalance} setAccountBalance={setAccountBalance}
+           customRules={customRules} setCustomRules={setCustomRules} setTab={setTab} />}
         {tab === "coach" && <CoachTab s={s} trades={trades} report={coachReport} loading={coachLoading} generate={generateWeeklyReport} lang={lang} />}
         {tab === "psychology" && <PsychologyTab s={s} psyData={psyData} setPsyData={setPsyData} />}
         {tab === "import" && <ImportTab s={s} importText={importText} setImportText={setImportText} parsed={importParsed} loading={importLoading} parse={parseImport} addAll={addAllImported} error={importError} />}
         {tab === "settings" && <SettingsTab s={s} />}
       </div>
 
-      <BottomNav s={s} tab={tab} setTab={setTab} onMore={() => setMoreOpen(true)} />
-      {moreOpen && <MoreSheet s={s} tab={tab} setTab={setTab} onClose={() => setMoreOpen(false)} />}
+      {/* Πλωτό κουμπί «Νέο Trade» — μένει προσβάσιμο χωρίς κάτω μπάρα */}
+      {tab !== "newTrade" && (
+        <button className="vtx-fabfloat" onClick={() => setTab("newTrade")} aria-label={s.tabs.newTrade}>
+          <Icon name="plus" size={24} strokeWidth={2.4} />
+        </button>
+      )}
+
+      {moreOpen && <TopMenu s={s} tab={tab} setTab={setTab} onClose={() => setMoreOpen(false)} />}
     </div>
   );
 }
@@ -1032,6 +1105,10 @@ const ICON_PATHS = {
   stats: "M3 3v18h18M7 15l4-4 3 3 5-6",
   sparkle: "M12 3l2 4 4 2-4 2-2 4-2-4-4-2 4-2z",
   check: "M9 11l3 3 8-8M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h9",
+  menu: "M4 7h16M4 12h16M4 17h16",
+  close: "M6 6l12 12M18 6L6 18",
+  compass: "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM15 9l-2 6-6 2 2-6 6-2z",
+  book: "M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5v-16zM20 18H6.5A2.5 2.5 0 0 0 4 20.5",
 };
 
 function Icon({ name, size = 22, strokeWidth = 1.9 }) {
@@ -1045,67 +1122,40 @@ function Icon({ name, size = 22, strokeWidth = 1.9 }) {
 }
 
 /* ============================================================
-   ΚΑΤΩ TAB BAR — τα 4 πιο συχνά + κεντρικό «Νέο»
+   TOP MENU — ανοίγει από πάνω, ένα κουμπί (☰) με ΟΛΕΣ τις επιλογές
+   ομαδοποιημένες
    ============================================================ */
-function BottomNav({ s, tab, setTab, onMore }) {
-  const items = [
-    { key: "dashboard", icon: "chart", label: s.tabs.dashboard },
-    { key: "trades", icon: "list", label: s.tabs.trades },
-    { key: "newTrade", icon: "plus", label: s.tabs.newTrade, fab: true },
-    { key: "psychology", icon: "brain", label: s.tabs.psychology },
-    { key: "__more", icon: "dots", label: s.nav.more },
-  ];
-  return (
-    <nav className="vtx-tabbar">
-      {items.map((it) => {
-        const active = it.key === tab;
-        const onClick = () => (it.key === "__more" ? onMore() : setTab(it.key));
-        if (it.fab) {
-          return (
-            <button key={it.key} className="vtx-tab vtx-tab-fabwrap" onClick={onClick} aria-label={it.label}>
-              <span className="vtx-fab"><Icon name={it.icon} size={24} strokeWidth={2.4} /></span>
-              <span className="vtx-fablabel">{it.label}</span>
-            </button>
-          );
-        }
-        return (
-          <button key={it.key} className={`vtx-tab ${active ? "on" : ""}`} onClick={onClick} aria-label={it.label}>
-            <Icon name={it.icon} />
-            <span>{it.label}</span>
-          </button>
-        );
-      })}
-    </nav>
-  );
-}
-
-/* ============================================================
-   «ΠΕΡΙΣΣΟΤΕΡΑ» — ομαδοποιημένο μενού
-   ============================================================ */
-function MoreSheet({ s, tab, setTab, onClose }) {
+function TopMenu({ s, tab, setTab, onClose }) {
+  // Information Architecture: Dashboard / Trading / Analytics / Performance / Settings.
+  // Το "Ψυχολογία" ονομάζεται ρητά "Ημερολόγιο" (Journal) εδώ και ζει κάτω από
+  // "Απόδοση" — traders δυσκολεύονται να πατήσουν κουμπί που λέει "Psychology".
   const groups = [
+    { title: s.nav.gQuick, items: [
+      { key: "dashboard", icon: "chart", label: s.tabs.dashboard },
+      { key: "analytics", icon: "stats", label: s.tabs.analytics },
+    ] },
     { title: s.nav.gTrading, items: [
       { key: "newTrade", icon: "plus", label: s.tabs.newTrade },
       { key: "trades", icon: "list", label: s.tabs.trades },
       { key: "import", icon: "download", label: s.tabs.import },
     ] },
-    { title: s.nav.gAnalytics, items: [
-      { key: "dashboard", icon: "chart", label: s.tabs.dashboard },
-    ] },
-    { title: s.nav.gMindset, items: [
-      { key: "psychology", icon: "brain", label: s.tabs.psychology },
+    { title: s.nav.gPerformance, items: [
+      { key: "blueprint", icon: "compass", label: s.tabs.blueprint },
+      { key: "psychology", icon: "book", label: s.tabs.psychology },
       { key: "coach", icon: "sparkle", label: s.tabs.coach },
     ] },
     { title: s.nav.gSystem, items: [
-      { key: "rules", icon: "check", label: s.tabs.rules },
       { key: "settings", icon: "gear", label: s.tabs.settings },
     ] },
   ];
   const go = (k) => { setTab(k); onClose(); };
   return (
-    <div className="vtx-sheet-wrap" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="vtx-sheet" onClick={(e) => e.stopPropagation()}>
-        <div className="vtx-sheet-handle" />
+    <div className="vtx-sheet-wrap vtx-sheet-wrap-top" onClick={onClose} role="dialog" aria-modal="true">
+      <div className="vtx-sheet vtx-sheet-top" onClick={(e) => e.stopPropagation()}>
+        <div className="vtx-sheet-topbar">
+          <span className="vtx-cardhead">{s.nav.more}</span>
+          <button className="vtx-iconbtn" onClick={onClose} aria-label={s.common.close}><Icon name="close" size={18} /></button>
+        </div>
         {groups.map((g) => (
           <div key={g.title}>
             <div className="vtx-grp">{g.title}</div>
@@ -1130,28 +1180,10 @@ function MoreSheet({ s, tab, setTab, onClose }) {
 function Dashboard({ s, trades, rules, lang, setTab }) {
   const d = s.dash;
   const maxRisk = (rules.find((r) => r.id === "maxRisk") || {}).value || 1;
-  const [period, setPeriod] = useState("30");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
   const [briefing, setBriefing] = useState(null);
   const [briefLoading, setBriefLoading] = useState(false);
 
-  const now = Date.now();
-  const inPeriod = (t) => {
-    const ts = new Date(t.date).getTime();
-    if (isNaN(ts)) return true;
-    if (period === "today") { const n = new Date(); const dt = new Date(ts); return dt.toDateString() === n.toDateString(); }
-    if (period === "all") return true;
-    if (period === "custom") {
-      const f = from ? new Date(from).getTime() : -Infinity;
-      const t2 = to ? new Date(to).getTime() + 86400000 : Infinity;
-      return ts >= f && ts <= t2;
-    }
-    const days = parseInt(period, 10) || 30;
-    return now - ts < days * 86400000;
-  };
-  const filtered = useMemo(() => trades.filter(inPeriod), [trades, period, from, to]);
-  const st = useMemo(() => buildStats(filtered, maxRisk), [filtered, maxRisk]);
+  const snap = useMemo(() => buildStats(trades, maxRisk), [trades, maxRisk]);
 
   const ruleVal = (id) => (rules.find((r) => r.id === id) || {}).value;
   const closedSorted = [...trades].filter((t) => t.status !== "open").sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -1181,8 +1213,6 @@ function Dashboard({ s, trades, rules, lang, setTab }) {
   }
 
   const money = (v) => (v >= 0 ? "+" : "") + (Math.round(v * 100) / 100).toLocaleString();
-  const pf = st.profitFactor === Infinity ? "∞" : st.profitFactor.toFixed(2);
-  const periods = [["today", d.pToday], ["7", d.p7], ["15", d.p15], ["30", d.p30], ["all", d.pAll], ["custom", d.pCustom]];
 
   return (
     <div>
@@ -1200,6 +1230,65 @@ function Dashboard({ s, trades, rules, lang, setTab }) {
         )}
       </div>
 
+      <div className="vtx-grid vtx-grid-4">
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.netPnl}</div><div className="vtx-kpi-value" style={{ color: snap.totalPnl >= 0 ? T.gain : T.loss }}>{money(snap.totalPnl)}</div></div>
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.winRate}</div><div className="vtx-kpi-value" style={{ color: T.brandGlow }}>{snap.winRate}%</div></div>
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.trades}</div><div className="vtx-kpi-value">{snap.count}{snap.openCount ? <span style={{ fontSize: 13, color: T.brandDeep }}> +{snap.openCount}</span> : null}</div></div>
+        <div className="vtx-kpi"><div className="vtx-kpi-label">{d.overall}</div><div className="vtx-kpi-value" style={{ color: T.brandGlow }}>{snap.overall}</div></div>
+      </div>
+
+      <div className="vtx-card" style={{ marginTop: 16 }}>
+        <div className="vtx-section-title">{d.overall}</div>
+        <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
+          <DisciplineRing score={snap.overall} />
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <Bar label={d.discipline} val={snap.discipline} />
+            <Bar label={d.psychology} val={snap.psychology} />
+            <Bar label={d.execution} val={snap.execution} />
+            <Bar label={d.risk} val={snap.risk} />
+          </div>
+        </div>
+        <button className="vtx-btn-ghost" style={{ marginTop: 16, width: "100%" }} onClick={() => setTab("analytics")}>
+          {d.goAnalytics} →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   ANALYTICS — φίλτρο περιόδου, βαθιά στατιστικά, τι πήγε σωστά/λάθος
+   ============================================================ */
+function AnalyticsTab({ s, trades, rules, lang }) {
+  const d = s.dash;
+  const maxRisk = (rules.find((r) => r.id === "maxRisk") || {}).value || 1;
+  const [period, setPeriod] = useState("30");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+
+  const now = Date.now();
+  const inPeriod = (t) => {
+    const ts = new Date(t.date).getTime();
+    if (isNaN(ts)) return true;
+    if (period === "today") { const n = new Date(); const dt = new Date(ts); return dt.toDateString() === n.toDateString(); }
+    if (period === "all") return true;
+    if (period === "custom") {
+      const f = from ? new Date(from).getTime() : -Infinity;
+      const t2 = to ? new Date(to).getTime() + 86400000 : Infinity;
+      return ts >= f && ts <= t2;
+    }
+    const days = parseInt(period, 10) || 30;
+    return now - ts < days * 86400000;
+  };
+  const filtered = useMemo(() => trades.filter(inPeriod), [trades, period, from, to]);
+  const st = useMemo(() => buildStats(filtered, maxRisk), [filtered, maxRisk]);
+
+  const money = (v) => (v >= 0 ? "+" : "") + (Math.round(v * 100) / 100).toLocaleString();
+  const pf = st.profitFactor === Infinity ? "∞" : st.profitFactor.toFixed(2);
+  const periods = [["today", d.pToday], ["7", d.p7], ["15", d.p15], ["30", d.p30], ["all", d.pAll], ["custom", d.pCustom]];
+
+  return (
+    <div>
       <div className="vtx-section-title">{d.periodTitle}</div>
       <div className="vtx-chips">
         {periods.map(([k, lbl]) => (
@@ -1510,10 +1599,10 @@ function AssetAutocomplete({ value, onChange }) {
 
 function Checkbox({ label, checked, onChange }) {
   return (
-    <div className="vtx-checkbox-row">
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} style={{ width: 18, height: 18, accentColor: T.brandGlow }} />
+    <label className="vtx-checkbox-row" style={{ cursor: "pointer" }}>
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} style={{ width: 18, height: 18, accentColor: T.brandGlow, flex: "none" }} />
       <span style={{ fontSize: 14 }}>{label}</span>
-    </div>
+    </label>
   );
 }
 
@@ -1788,6 +1877,231 @@ function ImportTab({ s, importText, setImportText, parsed, loading, parse, addAl
           <button className="vtx-btn" onClick={addAll}>{s.importT.addAll}</button>
         </div>
       )}
+    </div>
+  );
+}
+
+/* ============================================================
+   TRADING BLUEPRINT — το προσωπικό σχέδιο trading του χρήστη.
+   Ταυτότητα, στρατηγική, ρίσκο/κανόνες, ψυχολογία, ρουτίνα, AI
+   προτιμήσεις, σημειώσεις. Δεν είναι "ρύθμιση" — είναι βασικό
+   λειτουργικό κομμάτι πάνω στο οποίο θα βασίζονται οι αναλύσεις.
+   ============================================================ */
+function TradingBlueprintTab({ s, lang, blueprint, setBlueprint, rules, setRules, accountBalance, setAccountBalance, customRules, setCustomRules, setTab }) {
+  const t = s.bp;
+  const [chapter, setChapter] = useState("identity");
+  const [newCritical, setNewCritical] = useState("");
+  const EXP = BP_EXPERIENCE[lang];
+  const SIZING = BP_SIZING[lang];
+  const TONES = BP_AI_TONES[lang];
+  const PRINCIPLES = BP_PRINCIPLES[lang];
+  const CRIT = BP_CRITICAL_RULES[lang];
+
+  const get = (section, key, def = "") => (blueprint && blueprint[section] && blueprint[section][key] !== undefined ? blueprint[section][key] : def);
+  const set = (section, key, val) => setBlueprint((prev) => ({ ...prev, [section]: { ...(prev[section] || {}), [key]: val } }));
+  const getSet = (section, key) => get(section, key, {});
+  const toggleSet = (section, key, item) => { const cur = getSet(section, key); set(section, key, { ...cur, [item]: !cur[item] }); };
+
+  const critical = blueprint.critical || { presets: {}, custom: [] };
+  const toggleCritPreset = (label) => setBlueprint((prev) => {
+    const c = prev.critical || { presets: {}, custom: [] };
+    return { ...prev, critical: { ...c, presets: { ...c.presets, [label]: !c.presets[label] } } };
+  });
+  const addCritCustom = () => {
+    if (!newCritical.trim()) return;
+    setBlueprint((prev) => {
+      const c = prev.critical || { presets: {}, custom: [] };
+      return { ...prev, critical: { ...c, custom: [...(c.custom || []), newCritical.trim()] } };
+    });
+    setNewCritical("");
+  };
+  const removeCritCustom = (i) => setBlueprint((prev) => {
+    const c = prev.critical || { presets: {}, custom: [] };
+    return { ...prev, critical: { ...c, custom: c.custom.filter((_, idx) => idx !== i) } };
+  });
+
+  const Field = ({ section, k, label, rows }) => (
+    <div className="vtx-field">
+      <label className="vtx-label">{label}</label>
+      {rows ? (
+        <textarea className="vtx-textarea" rows={rows} value={get(section, k)} onChange={(e) => set(section, k, e.target.value)} placeholder={t.placeholder} />
+      ) : (
+        <input className="vtx-input" value={get(section, k)} onChange={(e) => set(section, k, e.target.value)} placeholder={t.placeholder} />
+      )}
+    </div>
+  );
+
+  const NumField = ({ section, k, label }) => (
+    <div className="vtx-field">
+      <label className="vtx-label">{label}</label>
+      <input className="vtx-input vtx-mono" type="number" value={get(section, k)} onChange={(e) => set(section, k, e.target.value)} placeholder="0" />
+    </div>
+  );
+
+  const ChipGroup = ({ section, k, options, label }) => {
+    const cur = getSet(section, k);
+    return (
+      <div className="vtx-field">
+        <label className="vtx-label">{label}</label>
+        <div className="vtx-chips" style={{ marginBottom: 0 }}>
+          {options.map((o) => (
+            <button key={o} type="button" className={"vtx-chip" + (cur[o] ? " active" : "")} onClick={() => toggleSet(section, k, o)}>{o}</button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const RadioRow = ({ section, k, options, label }) => (
+    <div className="vtx-field">
+      <label className="vtx-label">{label}</label>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {options.map((o) => (
+          <button key={o} type="button" className={get(section, k) === o ? "vtx-btn" : "vtx-btn-ghost"} style={{ padding: "7px 16px" }} onClick={() => set(section, k, o)}>{o}</button>
+        ))}
+      </div>
+    </div>
+  );
+
+  const CHAPTERS = [
+    ["identity", "👤", t.chapters.identity],
+    ["strategy", "📈", t.chapters.strategy],
+    ["risk", "🛡", t.chapters.risk],
+    ["psychology", "🧠", t.chapters.psychology],
+    ["routine", "📅", t.chapters.routine],
+    ["ai", "🤖", t.chapters.ai],
+    ["notes", "📝", t.chapters.notes],
+  ];
+
+  return (
+    <div>
+      <div className="vtx-section-title">{t.title}</div>
+      <div style={{ color: T.textMuted, fontSize: 13, marginBottom: 18 }}>{t.subtitle}</div>
+
+      <div className="vtx-chips">
+        {CHAPTERS.map(([key, icon, label]) => (
+          <button key={key} className={"vtx-chip" + (chapter === key ? " active" : "")} onClick={() => setChapter(key)}>{icon} {label}</button>
+        ))}
+      </div>
+
+      {chapter === "identity" && (
+        <div className="vtx-card">
+          <Field section="identity" k="mission" label={t.idMission} rows={3} />
+          <div className="vtx-grid vtx-grid-2">
+            <Field section="identity" k="long" label={t.idLong} rows={2} />
+            <Field section="identity" k="short" label={t.idShort} rows={2} />
+          </div>
+          <RadioRow section="identity" k="experience" options={EXP} label={t.idExperience} />
+          <ChipGroup section="identity" k="markets" options={BP_MARKETS} label={t.idMarkets} />
+          <ChipGroup section="identity" k="style" options={BP_STYLES} label={t.idStyle} />
+          <ChipGroup section="identity" k="timeframes" options={BP_TIMEFRAMES} label={t.idTimeframes} />
+          <div className="vtx-divider" />
+          <div className="vtx-label" style={{ marginBottom: 10 }}>{t.idPrinciplesTitle}</div>
+          {PRINCIPLES.map((p) => (
+            <Checkbox key={p} label={p} checked={!!getSet("identity", "principles")[p]} onChange={() => toggleSet("identity", "principles", p)} />
+          ))}
+          <div style={{ marginTop: 14 }}>
+            <Field section="identity" k="personalRules" label={t.idPersonalRules} rows={3} />
+          </div>
+        </div>
+      )}
+
+      {chapter === "strategy" && (
+        <div className="vtx-card">
+          <Field section="strategy" k="name" label={t.stName} />
+          <Field section="strategy" k="desc" label={t.stDesc} rows={2} />
+          <div className="vtx-field">
+            <label className="vtx-label">{t.stSetupType}</label>
+            <select className="vtx-select" value={get("strategy", "setupType")} onChange={(e) => set("strategy", "setupType", e.target.value)}>
+              <option value="">—</option>
+              {BP_SETUP_TYPES.map((o) => <option key={o} value={o}>{o}</option>)}
+            </select>
+          </div>
+          <ChipGroup section="strategy" k="confirmations" options={BP_CONFIRMATIONS} label={t.stConfirmations} />
+          <div style={{ marginTop: 14 }}>
+            <Field section="strategy" k="entry" label={t.stEntry} rows={3} />
+            <Field section="strategy" k="exit" label={t.stExit} rows={3} />
+            <Field section="strategy" k="avoid" label={t.stAvoid} rows={3} />
+          </div>
+        </div>
+      )}
+
+      {chapter === "risk" && (
+        <>
+          <div className="vtx-card" style={{ marginBottom: 16 }}>
+            <div className="vtx-cardhead" style={{ marginBottom: 12 }}>{t.riskExtraTitle}</div>
+            <div className="vtx-grid vtx-grid-2">
+              <NumField section="risk" k="weekly" label={t.riskWeekly} />
+              <NumField section="risk" k="monthly" label={t.riskMonthly} />
+              <NumField section="risk" k="drawdown" label={t.riskDrawdown} />
+              <NumField section="risk" k="leverage" label={t.riskLeverage} />
+            </div>
+            <div className="vtx-field" style={{ maxWidth: 260 }}>
+              <label className="vtx-label">{t.riskSizing}</label>
+              <select className="vtx-select" value={get("risk", "sizing")} onChange={(e) => set("risk", "sizing", e.target.value)}>
+                <option value="">—</option>
+                {SIZING.map((o) => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div className="vtx-card" style={{ marginBottom: 16 }}>
+            <div className="vtx-cardhead">🔒 {t.criticalTitle}</div>
+            <div style={{ color: T.textMuted, fontSize: 13, margin: "6px 0 12px" }}>{t.criticalSub}</div>
+            {CRIT.map((c) => (
+              <Checkbox key={c} label={c} checked={!!critical.presets[c]} onChange={() => toggleCritPreset(c)} />
+            ))}
+            {(critical.custom || []).map((c, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: `1px solid ${T.borderSoft}` }}>
+                <span style={{ fontSize: 14 }}>🔒 {c}</span>
+                <button className="vtx-btn-danger" onClick={() => removeCritCustom(i)}>{s.trades.delete}</button>
+              </div>
+            ))}
+            <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+              <input className="vtx-input" value={newCritical} onChange={(e) => setNewCritical(e.target.value)} placeholder={t.addPlaceholder} onKeyDown={(e) => e.key === "Enter" && addCritCustom()} />
+              <button className="vtx-btn" onClick={addCritCustom}>{t.add}</button>
+            </div>
+          </div>
+
+          <RulesTab s={s} rules={rules} setRules={setRules} accountBalance={accountBalance} setAccountBalance={setAccountBalance} customRules={customRules} setCustomRules={setCustomRules} lang={lang} />
+        </>
+      )}
+
+      {chapter === "psychology" && (
+        <div className="vtx-card">
+          <Field section="psychology" k="fomo" label={t.psyFomo} rows={2} />
+          <Field section="psychology" k="revenge" label={t.psyRevenge} rows={2} />
+          <Field section="psychology" k="loss3" label={t.psy3Loss} rows={2} />
+          <Field section="psychology" k="win3" label={t.psy3Win} rows={2} />
+          <Field section="psychology" k="stop" label={t.psyStop} rows={2} />
+          <Field section="psychology" k="recover" label={t.psyRecover} rows={2} />
+        </div>
+      )}
+
+      {chapter === "routine" && (
+        <div className="vtx-card">
+          <Field section="routine" k="morning" label={t.routineMorning} rows={3} />
+          <Field section="routine" k="evening" label={t.routineEvening} rows={3} />
+          <Field section="routine" k="weekend" label={t.routineWeekend} rows={3} />
+          <div className="vtx-divider" />
+          <div style={{ color: T.textMuted, fontSize: 13, marginBottom: 10 }}>{t.routineNote}</div>
+          <button className="vtx-btn-ghost" onClick={() => setTab("psychology")}>{t.routineLink} →</button>
+        </div>
+      )}
+
+      {chapter === "ai" && (
+        <div className="vtx-card">
+          <RadioRow section="ai" k="tone" options={TONES} label={t.aiToneTitle} />
+        </div>
+      )}
+
+      {chapter === "notes" && (
+        <div className="vtx-card">
+          <Field section="notes" k="text" label={t.notesLabel} rows={10} />
+        </div>
+      )}
+
+      <div style={{ color: T.textFaint, fontSize: 12, textAlign: "center", padding: "20px 0" }}>{t.saved}</div>
     </div>
   );
 }
